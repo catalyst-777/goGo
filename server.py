@@ -43,11 +43,11 @@ def process_login():
         flash("The email or password you entered was incorrect.")
     else:
         # Log in user by storing the user's first name in session
-        
+        session["user_id"] = user.user_id
         session["user_fname"] = user.fname
         flash(f"Welcome back, {user.fname}!")
 
-    return redirect("/")
+    return render_template("user_page.html", user=user)
 
 
 

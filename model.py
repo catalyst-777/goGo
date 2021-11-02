@@ -16,12 +16,12 @@ class User(db.Model):
     password = db.Column(db.String(100), nullable = False)
 
     #creates relationship and gives access to reviews made by specific user
-    reviews = db.relationship("Reviews", back_populates="user")
+    reviews = db.relationship("Review", back_populates="user")
 
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
     
-class Reviews(db.Model):
+class Review(db.Model):
     """A user can have multiple reviews."""
 
     __tablename__ = "review_info"
@@ -29,12 +29,12 @@ class Reviews(db.Model):
     review_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    date_time = db.column(db.DateTime)
+    date_time = db.Column(db.DateTime)
     cleanliness = db.Column(db.Integer, nullable = False)
-    accessibile = db.Column(db.Boolean)
+    accessible = db.Column(db.Boolean)
     lgbt_friendly = db.Column(db.Boolean)
-    comments = db.column(db.Text)
-    #TODO find out data type of id pulled from maps api for each bathroom
+    comments = db.Column(db.Text)
+   
     bathroom_id = db.Column(db.String, nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey("user_info.user_id"), nullable = False)
     
@@ -42,10 +42,10 @@ class Reviews(db.Model):
     user = db.relationship("User", back_populates="reviews")
 
     def __repr__(self):
-        return f'<Reviews review_id={self.review_id} cleanliness={self.cleanliness}>'
+        #TODO add user id and bathroom id
+        return f'<Review review_id={self.review_id} >'
 
 
-#TODO be sure to call db "reviews"
 def connect_to_db(flask_app, db_uri="postgresql:///reviews", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo

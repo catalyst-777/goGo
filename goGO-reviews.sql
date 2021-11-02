@@ -124,6 +124,7 @@ COPY public.review_info (review_id, cleanliness, accessibile, lgbt_friendly, bat
 COPY public.user_info (user_id, fname, lname, email, password) FROM stdin;
 1	Courtney	Doss	777.catalyst@gmail.com	cosmo
 2	Bobby	Hassan	test@gmail.com	bobby
+3	Steve	advisor	steve@gmail.com	test
 \.
 
 
@@ -138,7 +139,7 @@ SELECT pg_catalog.setval('public.review_info_review_id_seq', 1, false);
 -- Name: user_info_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: courtneydoss
 --
 
-SELECT pg_catalog.setval('public.user_info_user_id_seq', 2, true);
+SELECT pg_catalog.setval('public.user_info_user_id_seq', 3, true);
 
 
 --
