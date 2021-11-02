@@ -19,7 +19,7 @@ class User(db.Model):
     reviews = db.relationship("Reviews", back_populates="user")
 
     def __repr__(self):
-        return f'<User user_id={self.user_id}email={self.email}>'
+        return f'<User user_id={self.user_id} email={self.email}>'
     
 class Reviews(db.Model):
     """A user can have multiple reviews."""
