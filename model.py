@@ -42,8 +42,7 @@ class Review(db.Model):
     user = db.relationship("User", back_populates="reviews")
 
     def __repr__(self):
-        #TODO add user id and bathroom id
-        return f'<Review review_id={self.review_id} >'
+        return f'<Review review_id={self.review_id} user_id={self.user_id} bathroom_id={self.bathroom_id}>'
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///reviews", echo=True):

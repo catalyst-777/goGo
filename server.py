@@ -2,11 +2,15 @@ from flask import (Flask, render_template, request, flash, session,
                    redirect)
 from model import connect_to_db
 import crud
-from jinja2 import StrictUndefined
+from jinja2 import StrictUndefined 
+import os
 
 app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
+
+#TODO ask Steve how to hide key
+# api_key = os.environ['KEY']
 
 @app.route('/')
 def homepage():
@@ -46,8 +50,11 @@ def process_login():
         session["user_id"] = user.user_id
         session["user_fname"] = user.fname
         flash(f"Welcome back, {user.fname}!")
+        return render_template("user_page.html", user=user)
 
-    return render_template("user_page.html", user=user)
+    return redirect('/')
+
+    
 
 
 

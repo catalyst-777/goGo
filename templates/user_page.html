@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
 
 {% block title %}{{ user.fname }}'s Page{% endblock %}
+{% block head %}
+<script src="/static/js/map.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxaT5BnADZrbyB9seeggQWfvKp_oCUYpg&libraries=places&callback=initMap"></script>
+{% endblock %}
 
 {% block body %}
-<h1>{{ user.fname }}</h1>
-<script src="/js/search_bar.js"></script>
+    <h1>Welcome, {{ user.fname }}!</h1>
+    
+    <input id="input" style="height: 75px; width: 1000px;">
+    <div id="map" style="height: 1000px; width: 1000px;"></div>
+    
 {% endblock %}
 
