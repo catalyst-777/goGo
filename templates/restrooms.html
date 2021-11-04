@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+{% block head %}
+<script src="/static/js/map.js"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxaT5BnADZrbyB9seeggQWfvKp_oCUYpg&libraries=places&callback=initMap"></script>
+{% endblock %}
+
+{% block body %}
+
+    
+    <h3>Restrooms</h3>
+      <ul>
+        {% for restroom in location_data %}
+          <li>lat: {{restroom['geometry']['location']['lat']}}
+              lng: {{restroom['geometry']['location']['lng']}}
+          </li>
+        {% endfor %}
+      </ul>
+ 
+    
+{% endblock %}
+
+

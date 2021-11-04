@@ -1,6 +1,6 @@
 'use strict';
 let map;
-
+let userMarker;
 function initMap() {
   const location = {
     lat: 40.000,
@@ -22,7 +22,7 @@ function initMap() {
 
       //write the map
       map = new google.maps.Map(document.getElementById("map"), options); 
-      const userMarker = new google.maps.Marker({
+        userMarker = new google.maps.Marker({
         position: location,
         title: 'You are Here!',
         map: map,
@@ -81,6 +81,17 @@ function initMap() {
     })
   })
 
+// TODO: create event handler that grabs geo location and sends that info to server
+// cont. in callback function create markers based on lat/lng
+// const getRestrooms = (evt, location => {
+//   evt.preventDefailt();
+//   let lat = location.lat;
+//   let lng = location.lng;
+//       let latLng = `${lat},${lng}`;
+//   $.get(`/user_page/restrooms/<${latLng}>`, () => {
+
+//   } )
+// }
 }
 
 

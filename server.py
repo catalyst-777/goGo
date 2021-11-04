@@ -4,13 +4,14 @@ from model import connect_to_db
 import crud
 from jinja2 import StrictUndefined 
 import os
+import requests
 
 app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
 #TODO ask Steve how to hide key
-# api_key = os.environ['KEY']
+api_key = os.environ['API_KEY']
 
 @app.route('/')
 def homepage():
@@ -53,6 +54,22 @@ def process_login():
         return render_template("user_page.html", user=user)
 
     return redirect('/')
+
+#TODO use request library, pass lat/lng as value to key of location in payload
+#TODO return place id to be able to set bathroom id in reviews table
+@app.route("/user_page/restrooms")
+def get_restrooms():
+    """Get closest restrooms to user location from google maps api"""
+    url = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522%2C151.1957362&radius=1500&keyword=restroom&key={api_key}'
+
+    payload={}
+
+    response = requests.get(url, params=payload)
+    data = response.json()
+    location_data= data['results']
+    print(location_data)
+
+    return render_template('/restrooms.html', data=data,location_data=location_data)
 
     
 
