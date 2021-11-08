@@ -9,7 +9,7 @@ function initMap() {
 
   const options = {
     center: location,
-    zoom: 20
+    zoom: 15
   }
   if(navigator.geolocation) {
     console.log('geolocation is here!');
@@ -20,9 +20,55 @@ function initMap() {
       location.lat = loc.coords.latitude;
       location.lng = loc.coords.longitude;
 
+      // do ajax request with no event go to server route (middleman) to handle request to api
       //write the map
+      ///callback will have the data, callback will do everything else....the  user marker, restroom markers
+      $.get('/restrooms', location, resp => {
+        
+        for(let i = 0; i < resp['results'].length; i++){
+          
+          console.log(resp['results'][i]);
+          console.log(resp['results'][i]['name']);
+          // console.log(resp['results'][i]['geometry']['location']);
+          // console.log(resp['results'][i]['place_id']);
+          let restroomName = resp['results'][i]['name'];
+          let restroomLocation = resp['results'][i]['geometry']['location'];
+          let restroom_id = resp['results'][i]['place_id']
+          const restroomInfoContent = `
+          <div class="window-content">
+            <div class="bear-thumbnail">
+              <img
+                src="/static/img/polarbear.jpg"
+                alt="polarbear"
+              />
+            </div>
+
+            <ul class="restroom-info">
+              <li><b>Name: </b>${restroomName}</li>
+              <li><b>Location: </b>${restroomLocation}</li>
+            </ul>
+          </div>
+        `;
+
+
+          let restroomMarker = new google.maps.Marker({
+              position: restroomLocation,
+              title: `Restroom ${i}`,
+              map: map,
+            });
+            let restroomLocationInfo = new google.maps.InfoWindow({
+              content: restroomInfoContent,
+          });
+    
+          restroomMarker.addListener('click', () => {
+            restroomLocationInfo.open(map, restroomMarker);
+          });
+        }
+      })
+
       map = new google.maps.Map(document.getElementById("map"), options); 
-        userMarker = new google.maps.Marker({
+
+      userMarker = new google.maps.Marker({
         position: location,
         title: 'You are Here!',
         map: map,
@@ -52,9 +98,9 @@ function initMap() {
     map = new google.maps.Map(document.getElementById("map"), options);
 }
   //create new instance of autocomplete
-  //Autocomplete takes two parameters...the element taking in the input 
-  //and an object that contains the options we choose to for our input field..many available
-  //three required: componentRestrcitions, fields(specific things about the place chosen). and type
+  // Autocomplete takes two parameters...the element taking in the input 
+  // and an object that contains the options we choose to for our input field..many available
+  // three required: componentRestrcitions, fields(specific things about the place chosen). and type
    let autocomplete = new google.maps.places.Autocomplete(document.getElementById('input'), {
     componentRestrictions : {country: ['us']},
     //billed by how many fields you use...these two are free
@@ -81,17 +127,21 @@ function initMap() {
     })
   })
 
-// TODO: create event handler that grabs geo location and sends that info to server
-// cont. in callback function create markers based on lat/lng
-// const getRestrooms = (evt, location => {
-//   evt.preventDefailt();
-//   let lat = location.lat;
-//   let lng = location.lng;
-//       let latLng = `${lat},${lng}`;
-//   $.get(`/user_page/restrooms/<${latLng}>`, () => {
 
-//   } )
-// }
+
+
+
 }
 
+// create event handler that grabs geo location and sends that info to server
+// cont. in callback function create markers based on lat/lng
+const getRestrooms = (evt) => {
+  evt.preventdefault();
 
+  console.log(evt);
+  const url = '/restrooms'
+  const userLocation = location;
+  console.log(userLocation);
+  $.post(url, userLocation);
+}
+$('#getRestrooms').on('click', getRestrooms);

@@ -19,7 +19,7 @@ def homepage():
 
     return render_template('homepage.html')
 
-@app.route("/users", methods=["POST"])
+@app.route("/users", methods=["GET","POST"])
 def register_user():
     """Create a new user."""
     fname = request.form.get("fname")
@@ -57,19 +57,45 @@ def process_login():
 
 #TODO use request library, pass lat/lng as value to key of location in payload
 #TODO return place id to be able to set bathroom id in reviews table
-@app.route("/user_page/restrooms")
+@app.route("/restrooms", methods=['GET'])
 def get_restrooms():
     """Get closest restrooms to user location from google maps api"""
-    url = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522%2C151.1957362&radius=1500&keyword=restroom&key={api_key}'
+    url = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
-    payload={}
+    # payload
+    # ?location=-33.8670522%2C151.1957362&radius=1500&keyword=restroom&key={api_key}'
 
-    response = requests.get(url, params=payload)
-    data = response.json()
-    location_data= data['results']
-    print(location_data)
 
-    return render_template('/restrooms.html', data=data,location_data=location_data)
+    userLat = request.args.get('lat')
+    userLng = request.args.get('lng')
+    print(f'userLat: {userLat}')
+
+    keywords = ['food', 'gas', 'restroom']
+    data_list = []
+    for keyword in keywords:
+        payload={
+            'location': f'{userLat},{userLng}',
+            'radius': '3000',
+            'keyword': keyword,
+            'key': f'{api_key}'
+        }
+
+        response = requests.get(url, params=payload)
+        resp_data = response.json()
+        print(keyword + ":\n" + str(len(resp_data["results"])))
+        data_list.append(resp_data)
+        print(len(data_list))
+  
+    results_list = []
+    for data in data_list:
+        for result in data["results"]:
+            results_list.append(result)
+    
+    aggregated_data = data_list[0]
+    aggregated_data["results"] = results_list
+    # print(len(aggregated_data["results"]))  
+
+    return aggregated_data
 
     
 
