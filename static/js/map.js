@@ -27,25 +27,28 @@ function initMap() {
         
         for(let i = 0; i < resp['results'].length; i++){
           
-          console.log(resp['results'][i]);
+          // console.log(resp['results'][i]);
           console.log(resp['results'][i]['name']);
           // console.log(resp['results'][i]['geometry']['location']);
           // console.log(resp['results'][i]['place_id']);
+          
           let restroomName = resp['results'][i]['name'];
           let restroomLocation = resp['results'][i]['geometry']['location'];
-          let restroom_id = resp['results'][i]['place_id']
+          let place_id = resp['results'][i]['place_id'];
+
+
+          // if(resp['results'][i]['opening_hours']['open_now']){
+          //   let hours = resp['results'][i]['opening_hours']['open_now'];
+          // }
+          
           const restroomInfoContent = `
           <div class="window-content">
-            <div class="bear-thumbnail">
-              <img
-                src="/static/img/polarbear.jpg"
-                alt="polarbear"
-              />
+            <div class="restroom-thumbnail">
+            
             </div>
 
             <ul class="restroom-info">
               <li><b>Name: </b>${restroomName}</li>
-              <li><b>Location: </b>${restroomLocation}</li>
             </ul>
           </div>
         `;
@@ -55,13 +58,21 @@ function initMap() {
               position: restroomLocation,
               title: `Restroom ${i}`,
               map: map,
+              bathroom_id: place_id,
+              name: restroomName
             });
+            
             let restroomLocationInfo = new google.maps.InfoWindow({
               content: restroomInfoContent,
           });
     
           restroomMarker.addListener('click', () => {
             restroomLocationInfo.open(map, restroomMarker);
+            console.log(restroomMarker.bathroom_id, restroomMarker.name);
+            $('#review-menu').append(`
+            <h2>${restroomMarker.name}</h2>
+            <button id="leave-review" class="${restroomMarker.bathroom_id}"">Leave Review</button>
+            <button id="see-reviewsß" class="${restroomMarker.bathroom_id}"">See Reviews</button>`);
           });
         }
       })

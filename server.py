@@ -82,9 +82,9 @@ def get_restrooms():
 
         response = requests.get(url, params=payload)
         resp_data = response.json()
-        print(keyword + ":\n" + str(len(resp_data["results"])))
+        # print(keyword + ":\n" + str(len(resp_data["results"])))
         data_list.append(resp_data)
-        print(len(data_list))
+        # print(len(data_list))
   
     results_list = []
     for data in data_list:
@@ -92,6 +92,7 @@ def get_restrooms():
             results_list.append(result)
     
     aggregated_data = data_list[0]
+    print(aggregated_data)
     aggregated_data["results"] = results_list
     # print(len(aggregated_data["results"]))  
 
