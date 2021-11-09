@@ -8,11 +8,15 @@
 
 {% block body %}
     <h1>Welcome, {{ user.fname }}!</h1>
+    <section class="user-dashboard">
+        <button id="user-reviews">View your reviews</button>
+    </section>
     
     <input id="input" style="height: 75px; width: 1000px;">
     <div id="review-menu">
 
     </div>
+    
     <div id="map" style="height: 1000px; width: 1000px;"></div>
    
 {% endblock %}

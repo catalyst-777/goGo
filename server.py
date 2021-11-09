@@ -1,16 +1,16 @@
-from flask import (Flask, render_template, request, flash, session,
-                   redirect)
+from flask import (Flask, render_template, request, flash, session, jsonify, redirect)
 from model import connect_to_db
 import crud
 from jinja2 import StrictUndefined 
 import os
 import requests
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
-#TODO ask Steve how to hide key
+
 api_key = os.environ['API_KEY']
 
 @app.route('/')
@@ -51,24 +51,18 @@ def process_login():
         session["user_id"] = user.user_id
         session["user_fname"] = user.fname
         flash(f"Welcome back, {user.fname}!")
-        return render_template("user_page.html", user=user)
+        return render_template("user_page.html", user=user, fname = session["user_fname"], user_id = session["user_id"])
 
     return redirect('/')
 
-#TODO use request library, pass lat/lng as value to key of location in payload
-#TODO return place id to be able to set bathroom id in reviews table
+#show restrooms on map
 @app.route("/restrooms", methods=['GET'])
 def get_restrooms():
     """Get closest restrooms to user location from google maps api"""
     url = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
-    # payload
-    # ?location=-33.8670522%2C151.1957362&radius=1500&keyword=restroom&key={api_key}'
-
-
     userLat = request.args.get('lat')
     userLng = request.args.get('lng')
-    print(f'userLat: {userLat}')
 
     keywords = ['food', 'gas', 'restroom']
     data_list = []
@@ -92,20 +86,59 @@ def get_restrooms():
             results_list.append(result)
     
     aggregated_data = data_list[0]
-    print(aggregated_data)
+    # print(data_list)
     aggregated_data["results"] = results_list
     # print(len(aggregated_data["results"]))  
 
     return aggregated_data
 
-    
+#show review form  
+@app.route("/review_form", methods=["POST"])
+def show_review_form():
+    """Show review form"""
+    bathroom_id = request.form.get("bathroomID")
+    bathroom_name = request.form.get("bathroomName")
+    session["bathroomName"] = bathroom_name
+    print('in show review route')
+    return render_template('review-form.html', bathroom_id = bathroom_id, bathroom_name = bathroom_name, bathroomName = session["bathroomName"], fname = session["user_fname"], user_id = session["user_id"])
+
+#Create user review
+@app.route("/review-form/createReview", methods=["POST"])
+def create_review():
+    """Create Review"""
+
+    date_time = request.form.get("date-picker")
+    date_time = datetime.strptime(date_time, "%Y-%m-%d")
+
+    bathroom_id = request.form.get("bathroomID")
+    bathroom_name = session["bathroomName"]
+    cleanliness = request.form.get("cleanliness")
+    lgbt_frendly = request.form.get("lgbt_friendly")
+    if lgbt_frendly == 'Yes':
+        lgbt_frendly = True
+    else:
+        lgbt_frendly = False
+    accessible = request.form.get("accessible")
+    if accessible == 'Yes':
+        accessible = True
+    else:
+        accessible = False
+    comments = request.form.get("comments")
+    user_id = session["user_id"]
+
+    crud.create_review(date_time, cleanliness, accessible, lgbt_frendly, comments, bathroom_id, user_id)
+    flash("You're review has been added!")
+    return render_template('review-form.html', fname = session["user_fname"], user_id = session["user_id"], bathroom_name = session["bathroomName"])
 
 
-
-
-
-
-
+#Get all of a particular user's reviews<input type="hidden" id="bathroomName" name="bathroomName" value="${restroomMarker.name}">
+# @app.route("/all_user_reviews", methods=["GET", "POST"])
+# def get_all_user_reviews():
+#     """Show all reviews"""
+#     bathroom_id = request.form.get("bathroomID")
+#     bathroom_name = request.form.get("bathroomName")
+#     print('in get reviews route')
+#     return render_template('/user_page.html')
 
 
 

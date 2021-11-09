@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class User(db.Model):
-    """A user."""
+    """A user can have many reviews."""
 
     __tablename__ = "user_info"
 
@@ -22,19 +22,18 @@ class User(db.Model):
         return f'<User user_id={self.user_id} email={self.email}>'
     
 class Review(db.Model):
-    """A user can have multiple reviews."""
+    """A review can have one user."""
 
     __tablename__ = "review_info"
 
     review_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    date_time = db.Column(db.DateTime)
+    date_time = db.Column(db.Date, nullable=False)
     cleanliness = db.Column(db.Integer, nullable = False)
     accessible = db.Column(db.Boolean)
     lgbt_friendly = db.Column(db.Boolean)
     comments = db.Column(db.Text)
-   
     bathroom_id = db.Column(db.String, nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey("user_info.user_id"), nullable = False)
     

@@ -28,7 +28,7 @@ function initMap() {
         for(let i = 0; i < resp['results'].length; i++){
           
           // console.log(resp['results'][i]);
-          console.log(resp['results'][i]['name']);
+          // console.log(resp['results'][i]['name']);
           // console.log(resp['results'][i]['geometry']['location']);
           // console.log(resp['results'][i]['place_id']);
           
@@ -42,16 +42,16 @@ function initMap() {
           // }
           
           const restroomInfoContent = `
-          <div class="window-content">
-            <div class="restroom-thumbnail">
-            
-            </div>
+            <div class="window-content">
+              <div class="restroom-thumbnail">
+              
+              </div>
 
-            <ul class="restroom-info">
-              <li><b>Name: </b>${restroomName}</li>
-            </ul>
-          </div>
-        `;
+              <ul class="restroom-info">
+                <li><b>Name: </b>${restroomName}</li>
+              </ul>
+            </div>
+          `;
 
 
           let restroomMarker = new google.maps.Marker({
@@ -69,14 +69,28 @@ function initMap() {
           restroomMarker.addListener('click', () => {
             restroomLocationInfo.open(map, restroomMarker);
             console.log(restroomMarker.bathroom_id, restroomMarker.name);
-            $('#review-menu').append(`
-            <h2>${restroomMarker.name}</h2>
-            <button id="leave-review" class="${restroomMarker.bathroom_id}"">Leave Review</button>
-            <button id="see-reviewsß" class="${restroomMarker.bathroom_id}"">See Reviews</button>`);
+            $('#review-menu').html(`
+            <form action="/review_form" method="POST">
+              <h2>${restroomMarker.name}</h2>
+              <input type="hidden" id="bathroomID" name="bathroomID" value="${restroomMarker.bathroom_id}">
+              <input type="hidden" id="bathroomName" name="bathroomName" value="${restroomMarker.name}">
+              <button type="submit" value="Submit "id="leave-review" class="${restroomMarker.bathroom_id}"">Leave Review</button>
+            </form>
+            
+            <form action="/all_user_reviews" method="POST">
+              <input type="hidden" id="bathroomID" name="bathroomID" value="${restroomMarker.bathroom_id}">
+              <input type="hidden" id="bathroomName" name="bathroomName" value="${restroomMarker.name}">
+              <button type="submit" value="Submit "id="see-reviews" class="${restroomMarker.bathroom_id}">See Reviews</button>
+            </form>
+            `);
+            
           });
         }
+     
+        
       })
-
+    
+     
       map = new google.maps.Map(document.getElementById("map"), options); 
 
       userMarker = new google.maps.Marker({
@@ -139,20 +153,19 @@ function initMap() {
   })
 
 
+  $('#leave-review').on('click', () => {
+    console.log('leave review has been clicked')
+    const formInputs = {
+      bathroom_id: $('#bathroomID').val(),
+      bathroom_name: $('#bathroomName').val()
+    }
+    
+    $.get('/review_form', formInputs, res => {
+      console.log(res);
+    });
+  });
 
-
+  
 
 }
 
-// create event handler that grabs geo location and sends that info to server
-// cont. in callback function create markers based on lat/lng
-const getRestrooms = (evt) => {
-  evt.preventdefault();
-
-  console.log(evt);
-  const url = '/restrooms'
-  const userLocation = location;
-  console.log(userLocation);
-  $.post(url, userLocation);
-}
-$('#getRestrooms').on('click', getRestrooms);
