@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ fname }}'s Reviews{% endblock %}
+{% block head %}
+{% endblock %}
+
+{% block body %}
+    <h1>Here are your reviews, {{ fname }}!</h1>
+    <ul class="all_user_reviews">
+        {% for review in reviews %}
+            <h3>Review #{{review["review_id"]}}</h3>
+            <ul>
+                <li>cleanliness rating: {{review["cleanliness"]}}/ 5</li>
+                <li>LGBTQIA Friendly? {{review["lgbt_friendly"]}}</li>
+            </ul>
+            
+        {% endfor %}
+      </ul>
+   
+{% endblock %}
+

@@ -97,10 +97,12 @@ def get_restrooms():
 def show_review_form():
     """Show review form"""
     bathroom_id = request.form.get("bathroomID")
+    session["bathroom_id"] = bathroom_id
     bathroom_name = request.form.get("bathroomName")
     session["bathroomName"] = bathroom_name
     print('in show review route')
-    return render_template('review-form.html', bathroom_id = bathroom_id, bathroom_name = bathroom_name, bathroomName = session["bathroomName"], fname = session["user_fname"], user_id = session["user_id"])
+
+    return render_template('review-form.html', bathroom_id = session["bathroom_id"], bathroom_name = bathroom_name, bathroomName = session["bathroomName"], fname = session["user_fname"], user_id = session["user_id"])
 
 #Create user review
 @app.route("/review-form/createReview", methods=["POST"])
@@ -110,7 +112,7 @@ def create_review():
     date_time = request.form.get("date-picker")
     date_time = datetime.strptime(date_time, "%Y-%m-%d")
 
-    bathroom_id = request.form.get("bathroomID")
+    bathroom_id = session["bathroom_id"]
     bathroom_name = session["bathroomName"]
     cleanliness = request.form.get("cleanliness")
     lgbt_frendly = request.form.get("lgbt_friendly")
@@ -128,18 +130,19 @@ def create_review():
 
     crud.create_review(date_time, cleanliness, accessible, lgbt_frendly, comments, bathroom_id, user_id)
     flash("You're review has been added!")
-    return render_template('review-form.html', fname = session["user_fname"], user_id = session["user_id"], bathroom_name = session["bathroomName"])
+
+    return render_template('review-form.html', fname = session["user_fname"], user_id = session["user_id"], bathroom_name = session["bathroomName"], bathroom_id = session["bathroom_id"])
 
 
-#Get all of a particular user's reviews<input type="hidden" id="bathroomName" name="bathroomName" value="${restroomMarker.name}">
-# @app.route("/all_user_reviews", methods=["GET", "POST"])
-# def get_all_user_reviews():
-#     """Show all reviews"""
-#     bathroom_id = request.form.get("bathroomID")
-#     bathroom_name = request.form.get("bathroomName")
-#     print('in get reviews route')
-#     return render_template('/user_page.html')
-
+#Get all of a particular user's reviews
+@app.route("/all_user_reviews", methods=["GET", "POST"])
+def get_all_user_reviews():
+    """Show all reviews"""
+    user_id = session["user_id"]
+    reviews = crud.get_all_user_reviews(user_id)
+   
+    return render_template('/all_user_reviews.html', fname = session["user_fname"], user_id = session["user_id"], reviews = reviews)
+    
 
 
 

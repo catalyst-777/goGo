@@ -31,13 +31,19 @@ def get_user_by_email(email):
 
 # CRUD for reviews
 def create_review(date_time, cleanliness, accessible, lgbt_friendly, comments, bathroom_id, user_id):
-
+    """Create and return a new review"""
     review = Review(date_time=date_time, cleanliness=cleanliness, accessible=accessible, lgbt_friendly=lgbt_friendly, comments=comments, bathroom_id=bathroom_id, user_id=user_id)
 
     db.session.add(review)
     db.session.commit()
 
     return review
+
+def get_all_user_reviews(user_id):
+    """Return all reviews from one user"""
+    user = User.query.filter(User.user_id == user_id).first()
+
+    return user.reviews
 
 if __name__ == "__main__":
     from server import app

@@ -26,21 +26,11 @@ function initMap() {
       $.get('/restrooms', location, resp => {
         
         for(let i = 0; i < resp['results'].length; i++){
-          
-          // console.log(resp['results'][i]);
-          // console.log(resp['results'][i]['name']);
-          // console.log(resp['results'][i]['geometry']['location']);
-          // console.log(resp['results'][i]['place_id']);
-          
+        
           let restroomName = resp['results'][i]['name'];
           let restroomLocation = resp['results'][i]['geometry']['location'];
           let place_id = resp['results'][i]['place_id'];
 
-
-          // if(resp['results'][i]['opening_hours']['open_now']){
-          //   let hours = resp['results'][i]['opening_hours']['open_now'];
-          // }
-          
           const restroomInfoContent = `
             <div class="window-content">
               <div class="restroom-thumbnail">
@@ -52,7 +42,6 @@ function initMap() {
               </ul>
             </div>
           `;
-
 
           let restroomMarker = new google.maps.Marker({
               position: restroomLocation,

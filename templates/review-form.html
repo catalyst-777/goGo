@@ -6,12 +6,16 @@
 {% endblock %}
 
 {% block body %}
-<h2>Hi {{ fname }}, leave your review for {{bathroom_name}}:</h2>
+{% for msg in get_flashed_messages() %}
+      <p class="flash-msg">
+        {{ msg }}
+      </p>
+    {% endfor %}
+<h1>Hi {{ fname }}, leave your review for {{bathroom_name}}:</h1>
 <form action="/review-form/createReview" method="POST">
-    <input type="hidden" id="bathroomID" name="bathroomID" value="${restroomMarker.bathroom_id}">
-    <input type="hidden" id="bathroomName" name="bathroomName" value="${restroomMarker.name}">
+    <input type="hidden" id="bathroomID" name="bathroomID" value="{{ bathroom_id }}">
+    <input type="hidden" id="bathroomName" name="bathroomName" value="{{ bathroom_name }}">
     <input type="hidden" id="userID" name="user_id" value="${user_id}">
-    <h1>Leave a Review for {{bathroom_name}} </h1>
     <p>
         <label for="date-picker">Date:</label>
         <input type="date" id="date-picker" name="date-picker">
@@ -50,8 +54,10 @@
         <input type="submit" value="Post Review">
     </p>
 </form>
+<form action="/all_user_reviews" method="POST">
+    <input type="submit" value="See All Your Reviews" >
+</form>
 
- 
     
 {% endblock %}
  
