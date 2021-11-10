@@ -55,6 +55,23 @@ def process_login():
 
     return redirect('/')
 
+#Go to user page/dashboard
+@app.route("/user_page")
+def go_to_user_page():
+
+    return render_template("user_page.html", fname = session["user_fname"], user_id = session["user_id"])
+
+# logout user
+@app.route("/log_out")
+def log_out():
+    """Log out user by removing the stored session"""
+    for key in list(session.keys()):
+     session.pop(key)
+    
+    flash("You are now logged out!")
+
+    return redirect("/")
+
 #show restrooms on map
 @app.route("/restrooms", methods=['GET'])
 def get_restrooms():
@@ -100,9 +117,8 @@ def show_review_form():
     session["bathroom_id"] = bathroom_id
     bathroom_name = request.form.get("bathroomName")
     session["bathroomName"] = bathroom_name
-    print('in show review route')
-
-    return render_template('review-form.html', bathroom_id = session["bathroom_id"], bathroom_name = bathroom_name, bathroomName = session["bathroomName"], fname = session["user_fname"], user_id = session["user_id"])
+    
+    return render_template('review-form.html', bathroom_id = session["bathroom_id"], bathroom_name = session["bathroomName"], fname = session["user_fname"], user_id = session["user_id"])
 
 #Create user review
 @app.route("/review-form/createReview", methods=["POST"])
@@ -129,7 +145,7 @@ def create_review():
     user_id = session["user_id"]
 
     crud.create_review(date_time, cleanliness, accessible, lgbt_frendly, comments, bathroom_id, user_id)
-    flash("You're review has been added!")
+    flash("Your review has been added!")
 
     return render_template('review-form.html', fname = session["user_fname"], user_id = session["user_id"], bathroom_name = session["bathroomName"], bathroom_id = session["bathroom_id"])
 

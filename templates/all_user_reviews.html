@@ -13,11 +13,13 @@
                 <li>cleanliness rating: {{review["cleanliness"]}}/ 5</li>
                 <li>LGBTQIA Friendly? {{review["lgbt_friendly"]}}</li>
                 <li>Handicap Accessible? {{review["accessible"]}}</li>
-                <li>Comments{{review["comments"]}}</li>
+                <li>Comments: {{review["comments"]}}</li>
             </ul>
             
         {% endfor %}
       </ul>
-   
+      <a href='/user_page'>User Page</a>
+      <p></p>
+      <a href='/log_out'>Log OUT</a>
 {% endblock %}
 

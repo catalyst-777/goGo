@@ -20,7 +20,7 @@ function initMap() {
       location.lat = loc.coords.latitude;
       location.lng = loc.coords.longitude;
 
-      // do ajax request with no event go to server route (middleman) to handle request to api
+      // ajax request with no event go to server route (middleman) to handle request to api
       //write the map
       ///callback will have the data, callback will do everything else....the  user marker, restroom markers
       $.get('/restrooms', location, resp => {
