@@ -144,7 +144,7 @@ def create_review():
     comments = request.form.get("comments")
     user_id = session["user_id"]
 
-    crud.create_review(date_time, cleanliness, accessible, lgbt_frendly, comments, bathroom_id, user_id)
+    crud.create_review(bathroom_name, date_time, cleanliness, accessible, lgbt_frendly, comments, bathroom_id, user_id)
     flash("Your review has been added!")
 
     return render_template('review-form.html', fname = session["user_fname"], user_id = session["user_id"], bathroom_name = session["bathroomName"], bathroom_id = session["bathroom_id"])
@@ -154,6 +154,9 @@ def create_review():
 @app.route("/all_user_reviews", methods=["GET", "POST"])
 def get_all_user_reviews():
     """Show all reviews"""
+    # check if bathroomName is stored in session
+    # if session.get("bathroomName") is None:
+    #     session["bathroomName"] = "No restroom chosen"
     user_id = session["user_id"]
     reviews = crud.get_all_user_reviews(user_id)
    

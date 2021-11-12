@@ -29,6 +29,7 @@ class Review(db.Model):
     review_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
+    bathroom_name = db.Column(db.String)
     date_time = db.Column(db.Date, nullable=False)
     cleanliness = db.Column(db.Integer, nullable = False)
     accessible = db.Column(db.Boolean)
