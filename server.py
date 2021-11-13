@@ -127,8 +127,9 @@ def create_review():
 
     date_time = request.form.get("date-picker")
     date_time = datetime.strptime(date_time, "%Y-%m-%d")
-
+    bathroom_id = request.form.get("bathroomID")
     bathroom_id = session["bathroom_id"]
+    bathroom_name = request.form.get("bathroomName")
     bathroom_name = session["bathroomName"]
     cleanliness = request.form.get("cleanliness")
     lgbt_frendly = request.form.get("lgbt_friendly")
@@ -172,9 +173,9 @@ def get_all_restroom_reviews():
   
     reviews = crud.get_all_restroom_reviews(bathroom_id)
     
-    if reviews is None:
-        flash('This restroom has not been reviewed.')
-        return render_template('/chosen_restroom_reviews.html', fname = session["user_fname"], user_id = session["user_id"], bathroom_name = bathroom_name, bathroom_id = session["bathroom_id"])
+    if len(reviews) <= 0:
+        flash('This restroom has not been reviewed. Be the first to leave a review!')
+        # return render_template('/chosen_restroom_reviews.html', fname = session["user_fname"], user_id = session["user_id"], bathroom_name = bathroom_name, bathroom_id = session["bathroom_id"])
    
     return render_template('/chosen_restroom_reviews.html', fname = session["user_fname"], user_id = session["user_id"],bathroom_name = bathroom_name, bathroom_id = bathroom_id, reviews = reviews)
 

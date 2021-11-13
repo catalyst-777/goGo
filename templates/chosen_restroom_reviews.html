@@ -5,19 +5,31 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Here are the reviews for {{bathroom_name}}!</h1>
-    <ul class="all_user_reviews">
-        {% for review in reviews %}
-            <ul>
-                <li>Date: {{review["date_time"]}}</li>
-                <li>cleanliness rating: {{review["cleanliness"]}}/ 5</li>
-                <li>LGBTQIA Friendly? {{review["lgbt_friendly"]}}</li>
-                <li>Handicap Accessible? {{review["accessible"]}}</li>
-                <li>Comments: {{review["comments"]}}</li>
-            </ul>
-            <p></p>
-        {% endfor %}
-      </ul>
+{% for msg in get_flashed_messages() %}
+      <p class="flash-msg">
+        {{ msg }}
+      </p>
+    {% endfor %}
+        <h1>Here are the reviews for {{bathroom_name}}!</h1>
+        <ul class="all_user_reviews">
+            {% for review in reviews %}
+                <ul>
+                    <li>Date: {{review["date_time"]}}</li>
+                    <li>cleanliness rating: {{review["cleanliness"]}}/ 5</li>
+                    <li>LGBTQIA Friendly? {{review["lgbt_friendly"]}}</li>
+                    <li>Handicap Accessible? {{review["accessible"]}}</li>
+                    <li>Comments: {{review["comments"]}}</li>
+                </ul>
+                <p></p>
+            {% endfor %}
+        </ul>
+
+        <form action="/review_form" method="POST">
+            <input type="hidden" id="bathroomID" name="bathroomID" value="${restroomMarker.bathroom_id}">
+            <input type="hidden" id="bathroomName" name="bathroomName" value="{{bathroom_name}}">
+            <button type="submit" value="Submit "id="leave-review" class="{{bathroom_id}}">Leave Review</button>
+        </form>
+      <p></p>
       <a href='/user_page'>User Page</a>
       <p></p>
       <a href='/log_out'>Log OUT</a>
