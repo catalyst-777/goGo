@@ -4,14 +4,17 @@ let userMarker;
 let restroomLocation;
 let userLatLng;
 let restroomLatLng;
+let restroomLat;
+let restroomLng;
+
 function initMap() {
-  const location = {
+  const userLoc = {
     lat: 40.000,
     lng: -79.000
   }
 
   const options = {
-    center: location,
+    center: userLoc,
     zoom: 15
   }
   if(navigator.geolocation) {
@@ -20,24 +23,24 @@ function initMap() {
     //this will ask user for permission to get their position
     navigator.geolocation.getCurrentPosition((loc) => {
       //gets lat/lng...updates location object...if user says yes
-      location.lat = loc.coords.latitude;
-      location.lng = loc.coords.longitude;
+      userLoc.lat = loc.coords.latitude;
+      userLoc.lng = loc.coords.longitude;
 
       // create user latlng instance for use in getting route
-      userLatLng = new google.maps.LatLng(location.lat, location.lng);
+      userLatLng = new google.maps.LatLng(userLoc.lat, userLoc.lng);
 
       // ajax request with no event go to server route (middleman) to handle request to api
       //write the map
       ///callback will have the data, callback will do everything else....the  user marker, restroom markers
-      $.get('/restrooms', location, resp => {
+      $.get('/restrooms', userLoc, resp => {
         
         for(let i = 0; i < resp['results'].length; i++){
         
           let restroomName = resp['results'][i]['name'];
           restroomLocation = resp['results'][i]['geometry']['location'];
           
-          let restroomLat = resp['results'][i]['geometry']['location']['lat'];
-          let restroomLng = resp['results'][i]['geometry']['location']['lng'];
+          restroomLat = resp['results'][i]['geometry']['location']['lat'];
+          restroomLng = resp['results'][i]['geometry']['location']['lng'];
           let place_id = resp['results'][i]['place_id'];
 
           const restroomInfoContent = `
@@ -83,11 +86,20 @@ function initMap() {
                 <input type="hidden" id="bathroomName" name="bathroomName" value="${restroomMarker.name}">
                 <button type="submit" value="Submit "id="see-reviews" class="${restroomMarker.bathroom_id}">See Reviews</button>
               </form>
+
+              <form action="/all_restroom_reviews" method="POST">
+                <input type="hidden" id="bathroomID" name="bathroomID" value="${restroomMarker.bathroom_id}">
+                <input type="hidden" id="bathroomName" name="bathroomName" value="${restroomMarker.name}">
+                <button type="submit" value="Submit "id="see-restroom-reviews" class="${restroomMarker.bathroom_id}">See Restroom Reviews</button>
+              </form>
     
-              <button id="get-directions">Get Directions</button>
               
             `);
-            
+            // enable button , maybe use .show or .css display block
+            const btn = document.getElementById('get-directions');
+            btn.disabled = false;
+            const resetBtn = document.getElementById('reset');
+            resetBtn.disabled = false;
           });
         }
         
@@ -114,15 +126,15 @@ function initMap() {
   //     });
   // }
       userMarker = new google.maps.Marker({
-        position: location,
+        position: userLoc,
         title: 'You are Here!',
         map: map,
       });
 
       const userLocationInfo = new google.maps.InfoWindow({
         content: `<h1>You are here
-        lat: ${location.lat}
-        lng: ${location.lng}
+        lat: ${userLoc.lat}
+        lng: ${userLoc.lng}
         !</h1>`,
       });
 
@@ -167,7 +179,7 @@ function initMap() {
     //adds marker
     //Marker takes an object as it's argument
     new google.maps.Marker({
-      position: place.geometry.location,
+      position: place.geometry.userLoc,
       title: place.name,
       map: map
 
@@ -186,37 +198,43 @@ function initMap() {
   //     console.log(res);
   //   })
   // })
-
+  let clicked = false;
   $('#get-directions').on('click', (evt) => {
-    evt.preventdefault();
     console.log('Clicked get directions')
-    const directionsService = new google.maps.DirectionsService();
+   
+      const directionsService = new google.maps.DirectionsService();
 
-    // The DirectionsRenderer object is in charge of drawing directions
-    // on maps
-    const directionsRenderer = new google.maps.DirectionsRenderer();
-    directionsRenderer.setMap(map);
+      // The DirectionsRenderer object is in charge of drawing directions
+      // on maps
+      const directionsRenderer = new google.maps.DirectionsRenderer();
+      directionsRenderer.setMap(map);
+      directionsRenderer.setPanel(document.getElementById('directionsPanel'));
 
-    const startToEnd = {
-      origin: {
-        lat: location.lat,
-        lng: location.lng,
-      },
-      destination: {
-        lat: restroomLat,
-        lng: restroomLng,
-      },
-      travelMode: 'WALKING',
-    };
+      const startToEnd = {
+        origin: {
+          lat: userLoc.lat,
+          lng: userLoc.lng,
+        },
+        destination: {
+          lat: restroomLat,
+          lng: restroomLng,
+        },
+        travelMode: 'WALKING',
+      };
 
-    directionsService.route(startToEnd, (response, status) => {
-      if (status === 'OK') {
-        directionsRenderer.setDirections(response);
-      } else {
-        alert(`Directions request unsuccessful due to: ${status}`);
-      }
-    });
+      directionsService.route(startToEnd, (response, status) => {
+        if (status === 'OK') {
+          directionsRenderer.setDirections(response);
+        } else {
+          alert(`Directions request unsuccessful due to: ${status}`);
+        }
+      });
+    
   });
+
+  $('#reset').on('click', evt =>{
+    location.reload();
+  })
   
 }
 

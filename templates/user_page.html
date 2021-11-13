@@ -11,10 +11,15 @@
     <form action="/all_user_reviews" method="POST">
         <input type="submit" value="See All Your Reviews" >
     </form>
-    <section id="review-menu"></section>
+    <section id="review-menu">
+    </section>
+    <button disabled="true" style="display:hidden" id="get-directions">Get Directions</button>
+    <button disabled="true" style="display:hidden" id="reset">Reset</button>
     <a href='/log_out'>Log OUT</a>
     <input id="input" style="height: 75px; width: 1000px;">
+    <div id="directionsPanel" style="float:center;width:100%;height:50%"></div>
     <div id="map" style="height: 1000px; width: 1000px;"></div>
+    
    
 {% endblock %}
 
