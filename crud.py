@@ -45,6 +45,14 @@ def get_all_user_reviews(user_id):
 
     return user.reviews
 
+def get_all_restroom_reviews(bathroom_id):
+    """Retrun all reviews for one restroom"""
+    
+    reviews = Review.query.filter(Review.bathroom_id == bathroom_id).all()
+    
+    return reviews
+
+
 if __name__ == "__main__":
     from server import app
 

@@ -161,7 +161,22 @@ def get_all_user_reviews():
     reviews = crud.get_all_user_reviews(user_id)
    
     return render_template('/all_user_reviews.html', fname = session["user_fname"], user_id = session["user_id"], reviews = reviews)
+
+@app.route('/all_restroom_reviews', methods=['GET', 'POST'])
+def get_all_restroom_reviews():
+    """Show all reviews for one restroom"""
+    # check if bathroomName is stored in session
+    # user_id = session["user_id"]
+    bathroom_id = request.form.get("bathroomID")
+    bathroom_name = request.form.get("bathroomName")
+  
+    reviews = crud.get_all_restroom_reviews(bathroom_id)
     
+    if reviews is None:
+        flash('This restroom has not been reviewed.')
+        return render_template('/chosen_restroom_reviews.html', fname = session["user_fname"], user_id = session["user_id"], bathroom_name = bathroom_name, bathroom_id = session["bathroom_id"])
+   
+    return render_template('/chosen_restroom_reviews.html', fname = session["user_fname"], user_id = session["user_id"],bathroom_name = bathroom_name, bathroom_id = bathroom_id, reviews = reviews)
 
 
 
