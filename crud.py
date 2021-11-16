@@ -52,6 +52,19 @@ def get_all_restroom_reviews(bathroom_id):
     
     return reviews
 
+def delete_review(review_id):
+    print(review_id)
+    review = Review.query.filter(Review.review_id == review_id).first()
+    print(review)
+    db.session.delete(review)
+    db.session.commit()
+
+
+def update_review(review_id):
+    print(review_id)
+    
+
+
 
 if __name__ == "__main__":
     from server import app

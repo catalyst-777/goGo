@@ -166,8 +166,7 @@ def get_all_user_reviews():
 @app.route('/all_restroom_reviews', methods=['GET', 'POST'])
 def get_all_restroom_reviews():
     """Show all reviews for one restroom"""
-    # check if bathroomName is stored in session
-    # user_id = session["user_id"]
+    
     bathroom_id = request.form.get("bathroomID")
     bathroom_name = request.form.get("bathroomName")
   
@@ -179,7 +178,25 @@ def get_all_restroom_reviews():
    
     return render_template('/chosen_restroom_reviews.html', fname = session["user_fname"], user_id = session["user_id"],bathroom_name = bathroom_name, bathroom_id = bathroom_id, reviews = reviews)
 
+#DELETE a user's review
+@app.route('/delete_review', methods=['POST'])
+def delete_review():
+    """Delete review"""
+    review_id = request.form.get("review_id")
+    user_id = session["user_id"]
+    review = crud.delete_review(review_id)
+    reviews = crud.get_all_user_reviews(user_id)
 
+    flash('Review was deleted')
+    return render_template('/all_user_reviews.html', fname = session["user_fname"], user_id = session["user_id"], reviews = reviews)
+
+# @app.route('/update_review', methods=['POST'])
+# def update_review():
+#     """Update review"""
+#     review_id = request.form.get("review_id")
+#     user_id = session["user_id"]
+#     crud.delete_review(review_id)
+#     reviews = crud.get_all_user_reviews(user_id)
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)
