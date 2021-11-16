@@ -30,23 +30,29 @@
     <h1>Here are your reviews, {{ fname }}!</h1>
     <ul class="all_user_reviews">
         {% for review in reviews %}
-            <h3>{{review["bathroom_name"]}}</h3>
-            <ul>
-                <li>Date: {{review["date_time"]}}</li>
-                <li>cleanliness rating: {{review["cleanliness"]}}/ 5</li>
-                <li>LGBTQIA Friendly? {{review["lgbt_friendly"]}}</li>
-                <li>Handicap Accessible? {{review["accessible"]}}</li>
-                <li>Comments: {{review["comments"]}}</li>
-            </ul>
-            <form action="/update_review" method="POST">
-                <input type="hidden" id="review_id" name="review_id" value="{{review['review_id']}}">
-                <button type="submit" value="Submit "id="update-restroom-review" class="{{review['review_id']}}">Update </button>
-              </form>
-            <form action="/delete_review" method="POST">
-                <input type="hidden" id="review_id" name="review_id" value="{{review['review_id']}}">
-                <button type="submit" value="Submit "id="delete-restroom-review" class="{{review['review_id']}}">Delete </button>
-              </form>
-            
+            <div class="card" style="width: 25rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{review["bathroom_name"]}}</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Date: {{review["date_time"]}}</li>
+                        <li class="list-group-item">cleanliness rating: {{review["cleanliness"]}}/ 5</li>
+                        <li class="list-group-item">LGBTQIA Friendly? {{review["lgbt_friendly"]}}</li>
+                        <li class="list-group-item">Handicap Accessible? {{review["accessible"]}}</li>
+                        <li class="list-group-item">Comments: {{review["comments"]}}</li>
+                    </ul>
+                    <!-- <form action="/update_review" method="POST">
+                        <input type="hidden" id="review_id" name="review_id" value="{{review['review_id']}}">
+                        <button type="submit" value="Submit "id="update-restroom-review" class="{{review['review_id']}}">Update</button>
+                    </form> -->
+                    <div class="card-body">
+                        <form action="/delete_review" method="POST">
+                            <input type="hidden" id="review_id" name="review_id" value="{{review['review_id']}}">
+                            <button type="submit" value="Submit "id="delete-restroom-review" class="{{review['review_id']}}">Delete </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <p></p>
         {% endfor %}
       </ul>
 {% endblock %}

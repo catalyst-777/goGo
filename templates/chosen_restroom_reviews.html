@@ -27,25 +27,36 @@
         {{ msg }}
       </p>
     {% endfor %}
-        <h1>Here are the reviews for {{bathroom_name}}!</h1>
-        <ul class="all_user_reviews">
-            {% for review in reviews %}
-                <ul>
-                    <li>Date: {{review["date_time"]}}</li>
-                    <li>cleanliness rating: {{review["cleanliness"]}}/ 5</li>
-                    <li>LGBTQIA Friendly? {{review["lgbt_friendly"]}}</li>
-                    <li>Handicap Accessible? {{review["accessible"]}}</li>
-                    <li>Comments: {{review["comments"]}}</li>
-                </ul>
-                <p></p>
-            {% endfor %}
-        </ul>
-
-        <form action="/review_form" method="POST">
-            <input type="hidden" id="bathroomID" name="bathroomID" value="${restroomMarker.bathroom_id}">
-            <input type="hidden" id="bathroomName" name="bathroomName" value="{{bathroom_name}}">
-            <button type="submit" value="Submit "id="leave-review" class="{{bathroom_id}}">Leave Review</button>
-        </form>
-      <p></p>
+      <div class="container-fluid">
+        <div class="row">
+            <h1>Here are the reviews for {{bathroom_name}}!</h1>
+            <ul class="all_user_reviews">
+                {% for review in reviews %}
+                    <div class="card" style="width: 25rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Date: {{review["date_time"]}}</h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">cleanliness rating: {{review["cleanliness"]}}/ 5</li>
+                                    <li class="list-group-item">LGBTQIA Friendly? {{review["lgbt_friendly"]}}</li>
+                                    <li class="list-group-item">Handicap Accessible? {{review["accessible"]}}</li>
+                                    <li class="list-group-item">Comments: {{review["comments"]}}</li>
+                                </ul>
+                        </div>
+                    </div>
+                    <p></p>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="row">
+            <form action="/review_form" method="POST">
+                <input type="hidden" id="bathroomID" name="bathroomID" value="${restroomMarker.bathroom_id}">
+                <input type="hidden" id="bathroomName" name="bathroomName" value="{{bathroom_name}}">
+                <button type="submit" value="Submit "id="leave-review" class="{{bathroom_id}}">Leave Review</button>
+            </form>
+            <p></p>
+        </div>ß
+    </div>
 {% endblock %}
+
+
 

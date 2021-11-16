@@ -80,12 +80,6 @@ function initMap() {
                 <input type="hidden" id="bathroomName" name="bathroomName" value="${restroomMarker.name}">
                 <button type="submit" value="Submit "id="leave-review" class="${restroomMarker.bathroom_id}"">Leave Review</button>
               </form>
-              
-              <form action="/all_user_reviews" method="POST">
-                <input type="hidden" id="bathroomID" name="bathroomID" value="${restroomMarker.bathroom_id}">
-                <input type="hidden" id="bathroomName" name="bathroomName" value="${restroomMarker.name}">
-                <button type="submit" value="Submit "id="see-reviews" class="${restroomMarker.bathroom_id}">See Reviews</button>
-              </form>
 
               <form action="/all_restroom_reviews" method="POST">
                 <input type="hidden" id="bathroomID" name="bathroomID" value="${restroomMarker.bathroom_id}">
@@ -108,28 +102,11 @@ function initMap() {
      
       map = new google.maps.Map(document.getElementById("map"), options);
       
-
-
-  //     function calcRoute() {
-  //       console.log('inside calc route')
-  //       let start = userLatLng;
-  //       let end = restroomLatLng;
-  //       let request = {
-  //         origin: start,
-  //         destination: end,
-  //         travelMode: 'DRIVING'
-  //       };
-  //     directionsService.route(request, function(result, status) {
-  //       if (status == 'OK') {
-  //         directionsRenderer.setDirections(result);
-  //       }
-  //     });
-  // }
       userMarker = new google.maps.Marker({
         position: userLoc,
         title: 'You are Here!',
         icon: {
-          url: '/static/img',
+          url: '/static/img/goGo_icon_cropped.png',
           scaledSize: new google.maps.Size(50, 50),
         },
         map: map,
@@ -164,31 +141,31 @@ function initMap() {
   // Autocomplete takes two parameters...the element taking in the input 
   // and an object that contains the options we choose to for our input field..many available
   // three required: componentRestrcitions, fields(specific things about the place chosen). and type
-   let autocomplete = new google.maps.places.Autocomplete(document.getElementById('input'), {
-    componentRestrictions : {country: ['us']},
-    //billed by how many fields you use...these two are free
-    fields: ['geometry', 'name'],
-    types: ['establishment']
-  });
+  //  let autocomplete = new google.maps.places.Autocomplete(document.getElementById('input'), {
+  //   componentRestrictions : {country: ['us']},
+  //   //billed by how many fields you use...these two are free
+  //   fields: ['geometry', 'name'],
+  //   types: ['establishment']
+  // });
 
   //event listener
   //takes two arguments:
   //place_changed event happens when user selects from drop down
   //callback function:
   //this anon cb gets the place
-  autocomplete.addListener("place_changed", () => {
-    //becomes place object
-    const place = autocomplete.getPlace();
-    console.log(place.geometry)
-    //adds marker
-    //Marker takes an object as it's argument
-    new google.maps.Marker({
-      position: place.geometry.userLoc,
-      title: place.name,
-      map: map
+  // autocomplete.addListener("place_changed", () => {
+  //   //becomes place object
+  //   const place = autocomplete.getPlace();
+  //   console.log(place.geometry)
+  //   //adds marker
+  //   //Marker takes an object as it's argument
+  //   new google.maps.Marker({
+  //     position: place.geometry.userLoc,
+  //     title: place.name,
+  //     map: map
 
-    })
-  })
+  //   })
+  // })
 
 
   // $('#get-directions').on('click', evt => {

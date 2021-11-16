@@ -23,23 +23,38 @@
                 <input class="btn btn-outline-success" type="submit" value="See All Your Reviews" >
               </form>
               <a class="nav-link" href="/log_out">Log Out</a>
-              <a class="nav-link" href="#">Pricing</a>
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            
             </div>
           </div>
         </div>
       </nav>
-
-    <h1>Welcome, {{ fname }}!</h1>
+      <h1 class="display-5">Welcome, {{ fname }}!</h1>
+      <div class="container">
+        <div class="row">
+          <div id="review-menu" class="col">
+          </div>
+          <div class="col">
+            <button disabled="true" style="display:hidden" id="get-directions">Get Directions</button>
+            <button disabled="true" style="display:hidden" id="reset">Reset</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div id="directionsPanel" style="float:center;width:100%;height:50%"></div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div id="map" style="height: 1000px; width: 1000px;"></div>
+            </div>
+          </div>
+      </div>
    
-    <section id="review-menu">
-     
-    </section>
-    <button disabled="true" style="display:hidden" id="get-directions">Get Directions</button>
-    <button disabled="true" style="display:hidden" id="reset">Reset</button>
-    <input id="input" style="height: 75px; width: 1000px;">
-    <div id="directionsPanel" style="float:center;width:100%;height:50%"></div>
-    <div id="map" style="height: 1000px; width: 1000px;"></div>
+  
+    
+
+    
+ 
     
    
 {% endblock %}
