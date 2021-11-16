@@ -128,6 +128,10 @@ function initMap() {
       userMarker = new google.maps.Marker({
         position: userLoc,
         title: 'You are Here!',
+        icon: {
+          url: '/static/img',
+          scaledSize: new google.maps.Size(50, 50),
+        },
         map: map,
       });
 

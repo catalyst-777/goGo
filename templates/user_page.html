@@ -7,15 +7,36 @@
 {% endblock %}
 
 {% block body %}
+    <nav class="navbar static-top navbar-expand-lg navbar-dark bg-dark" >
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="/static/img/goGo_icon_cropped.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+                goGo
+              </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <form class="d-flex" action="/all_user_reviews" method="POST">
+                <input class="btn btn-outline-success" type="submit" value="See All Your Reviews" >
+              </form>
+              <a class="nav-link" href="/log_out">Log Out</a>
+              <a class="nav-link" href="#">Pricing</a>
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
     <h1>Welcome, {{ fname }}!</h1>
-    <form action="/all_user_reviews" method="POST">
-        <input type="submit" value="See All Your Reviews" >
-    </form>
+   
     <section id="review-menu">
+     
     </section>
     <button disabled="true" style="display:hidden" id="get-directions">Get Directions</button>
     <button disabled="true" style="display:hidden" id="reset">Reset</button>
-    <a href='/log_out'>Log OUT</a>
     <input id="input" style="height: 75px; width: 1000px;">
     <div id="directionsPanel" style="float:center;width:100%;height:50%"></div>
     <div id="map" style="height: 1000px; width: 1000px;"></div>
