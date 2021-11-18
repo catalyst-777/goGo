@@ -35,7 +35,7 @@ function initMap() {
       $.get('/restrooms', userLoc, resp => {
         
         for(let i = 0; i < resp['results'].length; i++){
-        
+          let restroomAddress = resp['results'][i]['vicinity'];
           let restroomName = resp['results'][i]['name'];
           restroomLocation = resp['results'][i]['geometry']['location'];
           
@@ -48,10 +48,11 @@ function initMap() {
               <div class="restroom-thumbnail">
               
               </div>
-
-              <ul class="restroom-info">
-                <li><b>Name: </b>${restroomName}</li>
-              </ul>
+              <div class="restroom-info">
+                <h3>${restroomName}</h3>
+                <p><b>Address: </b>${restroomAddress}</p>
+              </div>
+              
             </div>
           `;
 
@@ -179,7 +180,7 @@ function initMap() {
   //     console.log(res);
   //   })
   // })
-  let clicked = false;
+  // let clicked = false;
   $('#get-directions').on('click', (evt) => {
     console.log('Clicked get directions')
    

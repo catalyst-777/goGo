@@ -29,6 +29,75 @@
         </div>
       </nav>
       <h1 class="display-5">Welcome, {{ fname }}!</h1>
+    
+      {% if show_predictions_modal %}
+      <div id="review_modal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- <h5 class="modal-title">Modal title</h5> -->
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h1>Hi {{ fname }}, leave your review for {{bathroom_name}}:</h1>
+                <form action="/review-form/createReview" method="POST">
+                    <input type="hidden" id="bathroomID" name="bathroomID" value="{{ bathroom_id }}">
+                    <input type="hidden" id="bathroomName" name="bathroomName" value="{{ bathroom_name }}">
+                    <input type="hidden" id="userID" name="user_id" value="${user_id}">
+                    <p>
+                        <label for="date-picker">Date:</label>
+                        <input type="date" id="date-picker" name="date-picker">
+                    </p>
+                    <p>
+                        Rating:
+                        <select name="cleanliness">
+                        <option value="">Rate cleanliness on a scale from 1 to 5</option>
+                        {% for num in range(1,6) %}
+                            <option value="{{ num }}">{{ num }}</option>
+                        {% endfor %}
+                        </select>
+                    </p>
+                    <p>
+                        Would you consider this restroom LGBTQIA friendly?
+                        <p>
+                            <input type="radio" id="true-friendly" name="lgbt_friendly" value="Yes">
+                            <label for="Yes">Yes</label><br>
+                            <input type="radio" id="false-notFriendly" name="lgbt_friendly" value="No">
+                            <label for="No">No</label><br>
+                        </p>
+                    </p>
+                    <p>
+                        Handicap Accessible?
+                        <p>
+                            <input type="radio" id="true-accessible" name="accessible" value="Yes">
+                            <label for="Yes">Yes</label><br>
+                            <input type="radio" id="false-notAccessible" name="accessible" value="No">
+                            <label for="No">No</label><br>
+                        </p>
+                    </p>
+                    <p>
+                        Any comments?
+                        <p>
+                            <textarea name="comments" id="comments"></textarea>
+                        </p>
+                    </p>
+                    <p>
+                        <input type="submit" value="Post Review">
+                    </p>
+                </form>
+                <form action="/all_user_reviews" method="POST">
+                    <input type="submit" value="See All Your Reviews" >
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+     
+      {% endif %} 
       <div class="container">
         <div class="row">
           <div id="review-menu" class="col">
@@ -50,9 +119,14 @@
           </div>
       </div>
    
+      {% if show_predictions_modal %}
+      <script type="text/javascript">
+          $(window).on('load', function() {
+              $('#review_modal').modal('show');
+          });
+      </script>
   
-    
-
+      {% endif %}
     
  
     

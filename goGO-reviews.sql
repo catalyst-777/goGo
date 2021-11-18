@@ -26,9 +26,12 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.review_info (
     review_id integer NOT NULL,
+    bathroom_name character varying,
+    date_time date NOT NULL,
     cleanliness integer NOT NULL,
-    accessibile boolean,
+    accessible boolean,
     lgbt_friendly boolean,
+    comments text,
     bathroom_id character varying NOT NULL,
     user_id integer NOT NULL
 );
@@ -113,7 +116,17 @@ ALTER TABLE ONLY public.user_info ALTER COLUMN user_id SET DEFAULT nextval('publ
 -- Data for Name: review_info; Type: TABLE DATA; Schema: public; Owner: courtneydoss
 --
 
-COPY public.review_info (review_id, cleanliness, accessibile, lgbt_friendly, bathroom_id, user_id) FROM stdin;
+COPY public.review_info (review_id, bathroom_name, date_time, cleanliness, accessible, lgbt_friendly, comments, bathroom_id, user_id) FROM stdin;
+3	Saba's Restaurant	2021-11-04	5	t	t	Restrooms were very clean and people were friendly.	ChIJa7-vBdjpQIYRzzJYuvA2Zyg	3
+4	Chevron	2021-02-03	1	t	f	very dirty	ChIJQeEdnxbCQIYR1t19RlpVIyU	3
+5	McDonald's	2021-11-11	4	t	t	Super clean!	ChIJqefELgrCQIYRUdAmyEoYW-I	3
+8	Swift Food Mart	2021-11-01	1	t	f	You do not want to go here...trust me. 	ChIJvUAVAHDCQIYRVsU9xggoL_8	1
+9	Exxon	2021-11-12	3	t	t	Fairly clean for a little gas station.	ChIJ71CMwRHCQIYRJSK2NiFr2Ro	1
+10	McDonald's	2021-11-14	5	t	f	CLEAN!!	ChIJqefELgrCQIYRUdAmyEoYW-I	1
+11	McDonald's	2021-11-14	5	t	f	CLEAN!!	ChIJqefELgrCQIYRUdAmyEoYW-I	1
+12	Chevron	2021-11-02	1	f	f	A lot of people hanging around outside. Wish I could rate this a negative 100. Felt unsafe and restroom was extremely dirty. 	ChIJQeEdnxbCQIYR1t19RlpVIyU	1
+13	Chick-fil-A	2021-11-04	5	t	f	Clean. Too bad they aren't LGBT friendly.	${restroomMarker.bathroom_id}	1
+14	Hartz Chicken Buffet	2021-11-16	3	t	t	Restrooms were not gender neutral, but they were single use and staff was very lgbt friendly.	ChIJZf4U4mXCQIYRV5A24GaB9Fo	1
 \.
 
 
@@ -132,7 +145,7 @@ COPY public.user_info (user_id, fname, lname, email, password) FROM stdin;
 -- Name: review_info_review_id_seq; Type: SEQUENCE SET; Schema: public; Owner: courtneydoss
 --
 
-SELECT pg_catalog.setval('public.review_info_review_id_seq', 1, false);
+SELECT pg_catalog.setval('public.review_info_review_id_seq', 14, true);
 
 
 --

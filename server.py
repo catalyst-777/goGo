@@ -40,7 +40,7 @@ def register_user():
 def process_login():
     """Process user login."""
     email = request.form.get("email")
-    password = request.form.get("password")
+    password = request.form.get("password") 
     
     user = crud.get_user_by_email(email)
     print(f'user {user}, email {email} password {password}')
@@ -50,16 +50,17 @@ def process_login():
         # Log in user by storing the user's first name in session
         session["user_id"] = user.user_id
         session["user_fname"] = user.fname
-        flash(f"Welcome back, {user.fname}!")
-        return render_template("user_page.html", user=user, fname = session["user_fname"], user_id = session["user_id"])
+        # flash(f"Welcome back, {user.fname}!")
+        show_predictions_modal = False
+        return render_template("user_page.html", user=user, show_predictions_modal = False, fname = session["user_fname"], user_id = session["user_id"])
 
     return redirect('/')
 
 #Go to user page/dashboard
 @app.route("/user_page")
 def go_to_user_page():
-
-    return render_template("user_page.html", fname = session["user_fname"], user_id = session["user_id"])
+    show_predictions_modal = False
+    return render_template("user_page.html", show_predictions_modal = False, fname = session["user_fname"], user_id = session["user_id"])
 
 # logout user
 @app.route("/log_out")
@@ -117,8 +118,9 @@ def show_review_form():
     session["bathroom_id"] = bathroom_id
     bathroom_name = request.form.get("bathroomName")
     session["bathroomName"] = bathroom_name
+    show_predictions_modal = True
     
-    return render_template('review-form.html', bathroom_id = session["bathroom_id"], bathroom_name = session["bathroomName"], fname = session["user_fname"], user_id = session["user_id"])
+    return render_template('user_page.html', show_predictions_modal = True, bathroom_id = session["bathroom_id"], bathroom_name = session["bathroomName"], fname = session["user_fname"], user_id = session["user_id"])
 
 #Create user review
 @app.route("/review-form/createReview", methods=["POST"])
@@ -148,7 +150,7 @@ def create_review():
     crud.create_review(bathroom_name, date_time, cleanliness, accessible, lgbt_frendly, comments, bathroom_id, user_id)
     flash("Your review has been added!")
 
-    return render_template('review-form.html', fname = session["user_fname"], user_id = session["user_id"], bathroom_name = session["bathroomName"], bathroom_id = session["bathroom_id"])
+    return render_template('user_page.html', show_predictions_modal = False, fname = session["user_fname"], user_id = session["user_id"], bathroom_name = session["bathroomName"], bathroom_id = session["bathroom_id"])
 
 
 #Get all of a particular user's reviews

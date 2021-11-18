@@ -6,31 +6,13 @@
 {% endblock %}
 
 {% block body %}
-<nav class="navbar static-top navbar-expand-lg navbar-dark bg-dark" >
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="/static/img/goGo_icon_cropped.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-            goGo
-          </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link" aria-current="page" href="user_page">Home</a>
-          <form class="d-flex" action="/all_user_reviews" method="POST">
-            <input class="btn btn-outline-success" type="submit" value="See All Your Reviews" >
-          </form>
-          <a class="nav-link" href="/log_out">Log Out</a>
-        </div>
-      </div>
-    </div>
-  </nav>
+
 {% for msg in get_flashed_messages() %}
       <p class="flash-msg">
         {{ msg }}
       </p>
     {% endfor %}
+<div class="container"></div>
 <h1>Hi {{ fname }}, leave your review for {{bathroom_name}}:</h1>
 <form action="/review-form/createReview" method="POST">
     <input type="hidden" id="bathroomID" name="bathroomID" value="{{ bathroom_id }}">
