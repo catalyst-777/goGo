@@ -39,21 +39,43 @@ function initMap() {
       // ajax request with no event go to server route (middleman) to handle request to api
       //write the map
       ///callback will have the data, callback will do everything else....the  user marker, restroom markers
-      $.get('/restrooms', userLoc, resp => {
+      $.get('/restrooms', userLoc, response => {
+        // console.log(response["resp1"]["results"])
+        let resp = response["resp1"]
+        let hours = response["hours"]
+        // console.log(hours)
         
-        //iterarate over response
+        // console.log(`Length of resp: ${resp["results"].length}`)
+        // console.log(`Length of hours: ${opening_hours.length}`)
+        //iterate over response
         //store necessary information
         for(let i = 0; i < resp['results'].length; i++){
           let restroomAddress = resp['results'][i]['vicinity'];
           let restroomName = resp['results'][i]['name'];
           restroomLocation = resp['results'][i]['geometry']['location'];
-          
           restroomLat = resp['results'][i]['geometry']['location']['lat'];
           restroomLng = resp['results'][i]['geometry']['location']['lng'];
           let place_id = resp['results'][i]['place_id'];
-
-          // what will be displayed when info windo for restroom marker is clicked
-          const restroomInfoContent = `
+          let restroomHourArray;
+          let restroomHours;
+          let restroomInfoContent;
+           // let restroom_hours = opening_hours["results"]
+          if(hours[i]["result"]["opening_hours"]){
+            // console.log(typeof hours[i]["result"]["opening_hours"])
+            // console.log(hours[i]["result"]["opening_hours"])
+            for(const key in hours[i]["result"]["opening_hours"])
+            // console.log(hours[i]["result"]["opening_hours"][key])
+              if(key === "weekday_text"){
+                // console.log(key)
+                restroomHourArray = hours[i]["result"]["opening_hours"][key]
+              }
+              
+          } else {
+            restroomHours = 'Hours of Operation Unavailable';
+          }
+          // what will be displayed when info window for restroom marker is clicked
+          if(restroomHours) {
+            restroomInfoContent = `
             <div class="window-content">
               <div class="restroom-thumbnail">
               
@@ -61,10 +83,36 @@ function initMap() {
               <div class="restroom-info">
                 <h3>${restroomName}</h3>
                 <p><b>Address: </b>${restroomAddress}</p>
+                <p><b>Hours: </b></p>
+                  <li>${restroomHours}</li>
               </div>
               
             </div>
           `;
+          }
+          else {
+            restroomInfoContent = `
+            <div class="window-content">
+              <div class="restroom-thumbnail">
+              
+              </div>
+              <div class="restroom-info">
+                <h3>${restroomName}</h3>
+                <p><b>Address: </b>${restroomAddress}</p>
+                <p><b>Hours: </b></p>
+                  <li>${restroomHourArray[0]}</li>
+                  <li>${restroomHourArray[1]}</li>
+                  <li>${restroomHourArray[2]}</li>
+                  <li>${restroomHourArray[3]}</li>
+                  <li>${restroomHourArray[4]}</li>
+                  <li>${restroomHourArray[5]}</li>
+                  <li>${restroomHourArray[6]}</li>
+              </div>
+              
+            </div>
+          `;
+          }
+          
 
           // create new instance of google maps marker
           let restroomMarker = new google.maps.Marker({

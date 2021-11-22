@@ -77,7 +77,7 @@ def log_out():
 @app.route("/restrooms", methods=['GET'])
 def get_restrooms():
     """Get closest restrooms to user location from google maps api"""
-    url = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
+    url1 = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
     userLat = request.args.get('lat')
     userLng = request.args.get('lng')
@@ -92,7 +92,7 @@ def get_restrooms():
             'key': f'{api_key}'
         }
 
-        response = requests.get(url, params=payload)
+        response = requests.get(url1, params=payload)
         resp_data = response.json()
         # print(keyword + ":\n" + str(len(resp_data["results"])))
         data_list.append(resp_data)
@@ -106,9 +106,33 @@ def get_restrooms():
     aggregated_data = data_list[0]
     # print(data_list)
     aggregated_data["results"] = results_list
-    # print(len(aggregated_data["results"]))  
+    # print(len(aggregated_data["results"]))
 
-    return aggregated_data
+    # get all place ids to use in api call to get phone numbers and hours of operation
+    place_ids = []
+    for result in aggregated_data["results"]:
+        place_ids.append(result["place_id"])
+    opening_hours_list = []
+    for restroom in place_ids:
+        url2 = "https://maps.googleapis.com/maps/api/place/details/json"
+
+        payload={
+            'place_id': restroom,
+            'fields': 'opening_hours',
+            'keyword': keyword,
+            'key': f'{api_key}'
+        }
+       
+        res = requests.get(url2, params=payload)
+        resp_data = res.json()
+        opening_hours_list.append(resp_data)
+    
+    # print(opening_hours_list)
+    response_data = {
+        "resp1": aggregated_data,
+        "hours": opening_hours_list
+    }
+    return response_data
 
 #show review form  
 @app.route("/review_form", methods=["POST"])
@@ -176,7 +200,6 @@ def get_all_restroom_reviews():
     
     if len(reviews) <= 0:
         flash('This restroom has not been reviewed. Be the first to leave a review!')
-        # return render_template('/chosen_restroom_reviews.html', fname = session["user_fname"], user_id = session["user_id"], bathroom_name = bathroom_name, bathroom_id = session["bathroom_id"])
    
     return render_template('/chosen_restroom_reviews.html', fname = session["user_fname"], user_id = session["user_id"],bathroom_name = bathroom_name, bathroom_id = bathroom_id, reviews = reviews)
 
