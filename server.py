@@ -109,31 +109,31 @@ def get_restrooms():
     # print(len(aggregated_data["results"]))
 
     # get all place ids to use in api call to get phone numbers and hours of operation
-    place_ids = []
-    for result in aggregated_data["results"]:
-        place_ids.append(result["place_id"])
-    opening_hours_list = []
-    for restroom in place_ids:
-        url2 = "https://maps.googleapis.com/maps/api/place/details/json"
+    # place_ids = []
+    # for result in aggregated_data["results"]:
+    #     place_ids.append(result["place_id"])
+    # opening_hours_list = []
+    # for restroom in place_ids:
+    #     url2 = "https://maps.googleapis.com/maps/api/place/details/json"
 
-        payload={
-            'place_id': restroom,
-            'fields': 'opening_hours',
-            'keyword': keyword,
-            'key': f'{api_key}'
-        }
+    #     payload={
+    #         'place_id': restroom,
+    #         'fields': 'opening_hours',
+    #         'keyword': keyword,
+    #         'key': f'{api_key}'
+    #     }
        
-        res = requests.get(url2, params=payload)
-        resp_data = res.json()
-        opening_hours_list.append(resp_data)
+    #     res = requests.get(url2, params=payload)
+    #     resp_data = res.json()
+    #     opening_hours_list.append(resp_data)
     
-    # print(opening_hours_list)
-    response_data = {
-        "resp1": aggregated_data,
-        "hours": opening_hours_list
-    }
-    return response_data
-
+    # # print(opening_hours_list)
+    # response_data = {
+    #     "resp1": aggregated_data,
+    #     "hours": opening_hours_list
+    # }
+    # return response_data
+    return aggregated_data
 #show review form  
 @app.route("/review_form", methods=["POST"])
 def show_review_form():
@@ -203,6 +203,30 @@ def get_all_restroom_reviews():
    
     return render_template('/chosen_restroom_reviews.html', fname = session["user_fname"], user_id = session["user_id"],bathroom_name = bathroom_name, bathroom_id = bathroom_id, reviews = reviews)
 
+    
+# Get average rating for a particular restroom
+@app.route('/average_rating', methods=['GET'])
+def get_avg_rating():
+    """Find aerage rating for restorom"""
+    bathroom_id = request.args.get("bathroom_id")
+    reviews = crud.get_all_restroom_reviews(bathroom_id)
+    print(reviews)
+    # print(bathroom_id)
+    total_clean_points = 0
+    if len(reviews) > 0:
+        for review in reviews:
+            print(f'review cleanliness: {review.cleanliness}')
+            total_clean_points += int(review.cleanliness)
+        avg_rating = int(round(total_clean_points / len(reviews), 0))
+        avg_rating = f'{str(avg_rating)}/5'
+        print(f'{review.bathroom_name}')
+        print(f'average rating: {avg_rating}')
+    else:
+        avg_rating = "Not yet reviewed"
+    
+    return avg_rating
+
+
 #DELETE a user's review
 @app.route('/delete_review', methods=['POST'])
 def delete_review():
@@ -215,13 +239,6 @@ def delete_review():
     flash('Review was deleted')
     return render_template('/all_user_reviews.html', fname = session["user_fname"], user_id = session["user_id"], reviews = reviews)
 
-# @app.route('/update_review', methods=['POST'])
-# def update_review():
-#     """Update review"""
-#     review_id = request.form.get("review_id")
-#     user_id = session["user_id"]
-#     crud.delete_review(review_id)
-#     reviews = crud.get_all_user_reviews(user_id)
 
 if __name__ == "__main__":
     # DebugToolbarExtension(app)

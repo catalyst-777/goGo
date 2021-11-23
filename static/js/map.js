@@ -8,6 +8,7 @@ let userLatLng;
 let restroomLatLng;
 let restroomLat;
 let restroomLng;
+let average_rating;
 
 // overall function that initializes map object
 function initMap() {
@@ -41,12 +42,11 @@ function initMap() {
       ///callback will have the data, callback will do everything else....the  user marker, restroom markers
       $.get('/restrooms', userLoc, response => {
         // console.log(response["resp1"]["results"])
-        let resp = response["resp1"]
-        let hours = response["hours"]
-        // console.log(hours)
-        
-        // console.log(`Length of resp: ${resp["results"].length}`)
-        // console.log(`Length of hours: ${opening_hours.length}`)
+        // let resp = response["resp1"]
+        // let hours = response["hours"]
+        console.log(response)
+        let resp = response;
+      
         //iterate over response
         //store necessary information
         for(let i = 0; i < resp['results'].length; i++){
@@ -56,63 +56,83 @@ function initMap() {
           restroomLat = resp['results'][i]['geometry']['location']['lat'];
           restroomLng = resp['results'][i]['geometry']['location']['lng'];
           let place_id = resp['results'][i]['place_id'];
+          let restroomInfoContent;
           let restroomHourArray;
           let restroomHours;
-          let restroomInfoContent;
-           // let restroom_hours = opening_hours["results"]
-          if(hours[i]["result"]["opening_hours"]){
-            // console.log(typeof hours[i]["result"]["opening_hours"])
-            // console.log(hours[i]["result"]["opening_hours"])
-            for(const key in hours[i]["result"]["opening_hours"])
-            // console.log(hours[i]["result"]["opening_hours"][key])
-              if(key === "weekday_text"){
-                // console.log(key)
-                restroomHourArray = hours[i]["result"]["opening_hours"][key]
-              }
-              
-          } else {
-            restroomHours = 'Hours of Operation Unavailable';
-          }
-          // what will be displayed when info window for restroom marker is clicked
-          if(restroomHours) {
-            restroomInfoContent = `
-            <div class="window-content">
-              <div class="restroom-thumbnail">
-              
-              </div>
-              <div class="restroom-info">
-                <h3>${restroomName}</h3>
-                <p><b>Address: </b>${restroomAddress}</p>
-                <p><b>Hours: </b></p>
-                  <li>${restroomHours}</li>
-              </div>
-              
-            </div>
-          `;
-          }
-          else {
-            restroomInfoContent = `
-            <div class="window-content">
-              <div class="restroom-thumbnail">
-              
-              </div>
-              <div class="restroom-info">
-                <h3>${restroomName}</h3>
-                <p><b>Address: </b>${restroomAddress}</p>
-                <p><b>Hours: </b></p>
-                  <li>${restroomHourArray[0]}</li>
-                  <li>${restroomHourArray[1]}</li>
-                  <li>${restroomHourArray[2]}</li>
-                  <li>${restroomHourArray[3]}</li>
-                  <li>${restroomHourArray[4]}</li>
-                  <li>${restroomHourArray[5]}</li>
-                  <li>${restroomHourArray[6]}</li>
-              </div>
-              
-            </div>
-          `;
-          }
           
+          // if(hours[i]["result"]["opening_hours"]){
+          //   // console.log(typeof hours[i]["result"]["opening_hours"])
+          //   // console.log(hours[i]["result"]["opening_hours"])
+          //   for(const key in hours[i]["result"]["opening_hours"])
+          //   // console.log(hours[i]["result"]["opening_hours"][key])
+          //     if(key === "weekday_text"){
+          //       // console.log(key)
+          //       restroomHourArray = hours[i]["result"]["opening_hours"][key]
+          //     }
+              
+          // } else {
+          //   restroomHours = 'Hours of Operation Unavailable';
+          // }
+          // what will be displayed when info window for restroom marker is clicked
+          // if(restroomHours) {
+          //   restroomInfoContent = `
+          //   <div class="window-content">
+          //     <div class="restroom-thumbnail">
+              
+          //     </div>
+          //     <div class="restroom-info">
+          //       <h3>${restroomName}</h3>
+          //       <div id="average-rating${i}">
+          //     </div>
+          //       <p><b>Address: </b>${restroomAddress}</p>
+          //       <p><b>Hours: </b></p>
+          //         <li>${restroomHours}</li>
+          //     </div>
+              
+          //   </div>
+          // `;
+          // }
+          // else {
+          //   restroomInfoContent = `
+          //   <div class="window-content">
+          //     <div class="restroom-thumbnail">
+          //     </div>
+              
+          //     <div class="restroom-info">
+          //       <h3>${restroomName}</h3>
+          //       <div id="average-rating${i}">
+                
+          //     </div>
+          //       <p><b>Address: </b>${restroomAddress}</p>
+          //       <p><b>Hours: </b></p>
+          //         <li>${restroomHourArray[0]}</li>
+          //         <li>${restroomHourArray[1]}</li>
+          //         <li>${restroomHourArray[2]}</li>
+          //         <li>${restroomHourArray[3]}</li>
+          //         <li>${restroomHourArray[4]}</li>
+          //         <li>${restroomHourArray[5]}</li>
+          //         <li>${restroomHourArray[6]}</li>
+          //     </div>
+              
+          //   </div>
+          // `;
+          // }
+          restroomInfoContent = `
+            <div class="window-content">
+              <div class="restroom-thumbnail">
+              </div>
+              
+              <div class="restroom-info">
+                <h3>${restroomName}</h3>
+                <div id="average-rating${i}">
+                
+              </div>
+                <p><b>Address: </b>${restroomAddress}</p>
+              
+              </div>
+              
+            </div>
+          `;
 
           // create new instance of google maps marker
           let restroomMarker = new google.maps.Marker({
@@ -120,7 +140,9 @@ function initMap() {
               title: `Restroom ${i}`,
               map: map,
               bathroom_id: place_id,
-              name: restroomName
+              name: restroomName,
+              restroomLat: restroomLat,
+              restroomLng: restroomLng
             });
             
             // create new instance of info window
@@ -130,11 +152,22 @@ function initMap() {
           
           // add event listener to handle marker click event
           restroomMarker.addListener('click', () => {
+            console.log("in click handler")
+            const restroom = {
+              bathroom_id : place_id 
+            }
             restroomLocationInfo.open(map, restroomMarker);
+            
+            $.get('/average_rating', restroom, response => {
+              console.log("get average rate")
+              average_rating = response;
+              $(`#average-rating${i}`).html(`<p><b>Average Rating: </b>${average_rating}</p>`);
+            })
+            
 
             // Create latlng instance for chosen restoom for directions
             restroomLatLng = new google.maps.LatLng(restroomLat, restroomLng);
-            console.log(restroomMarker.bathroom_id, restroomMarker.name);
+            
             $('#review-menu').html(`
               <form action="/review_form" method="POST">
                 <h2>${restroomMarker.name}</h2>
@@ -159,6 +192,47 @@ function initMap() {
             btn.disabled = false;
             const resetBtn = document.getElementById('reset');
             resetBtn.disabled = false;
+
+            // handles click event to get directions
+            $('#get-directions').on('click', (evt) => {
+              // create instance of DirectionsService
+              const directionsService = new google.maps.DirectionsService();
+
+              // The DirectionsRenderer object is in charge of drawing directions
+              // on maps
+              const directionsRenderer = new google.maps.DirectionsRenderer();
+
+              //tell directions renderer which map to render directions on
+              directionsRenderer.setMap(map);
+              //places panel for text directions in directions panel div
+              directionsRenderer.setPanel(document.getElementById('directionsPanel'));
+
+              // object to be passed in to get route, includes: starting and ending points
+              // and what mode user will be travelling by
+              const startToEnd = {
+                origin: {
+                  lat: userLoc.lat,
+                  lng: userLoc.lng,
+                },
+                destination: {
+                  lat: restroomMarker.restroomLat,
+                  lng: restroomMarker.restroomLng,
+                },
+                travelMode: 'WALKING',
+              };
+              
+              // call route method with startToEnd object and a callback
+              directionsService.route(startToEnd, (response, status) => {
+                if (status === 'OK') {
+                  // places directions on map
+                  directionsRenderer.setDirections(response);
+                } else {
+                  alert(`Directions request unsuccessful due to: ${status}`);
+                }
+              });
+            
+            });
+
           });
         }
         
@@ -206,47 +280,6 @@ function initMap() {
     console.log('geolocation not supported');
     map = new google.maps.Map(document.getElementById("map"), options);
 }
-
-    // handles vclick event to get directions
-    $('#get-directions').on('click', (evt) => {
-      
-      // create instance of DirectionsService
-      const directionsService = new google.maps.DirectionsService();
-
-      // The DirectionsRenderer object is in charge of drawing directions
-      // on maps
-      const directionsRenderer = new google.maps.DirectionsRenderer();
-
-      //tell directions renderer which map to render directions on
-      directionsRenderer.setMap(map);
-      //places panel for text directions in directions panel div
-      directionsRenderer.setPanel(document.getElementById('directionsPanel'));
-
-      // object to be passed in to get route, includes: starting and ending points
-      // and what mode user will be travelling by
-      const startToEnd = {
-        origin: {
-          lat: userLoc.lat,
-          lng: userLoc.lng,
-        },
-        destination: {
-          lat: restroomLat,
-          lng: restroomLng,
-        },
-        travelMode: 'WALKING',
-      };
-
-      // call route method with startToEnd object and a callback
-      directionsService.route(startToEnd, (response, status) => {
-        if (status === 'OK') {
-          // places directions on map
-          directionsRenderer.setDirections(response);
-        } else {
-          alert(`Directions request unsuccessful due to: ${status}`);
-        }
-      });
-    
-    });
 
     // handles reset, essentially refreshes page after running directions
     $('#reset').on('click', evt =>{

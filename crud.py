@@ -60,8 +60,9 @@ def delete_review(review_id):
     db.session.commit()
 
 
-def update_review(review_id):
-    print(review_id)
+
+
+
 
 
 
