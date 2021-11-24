@@ -50,7 +50,6 @@ def process_login():
         # Log in user by storing the user's first name in session
         session["user_id"] = user.user_id
         session["user_fname"] = user.fname
-        # flash(f"Welcome back, {user.fname}!")
         show_predictions_modal = False
         return render_template("user_page.html", user=user, show_predictions_modal = False, fname = session["user_fname"], user_id = session["user_id"])
 
