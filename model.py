@@ -48,13 +48,14 @@ def example_data():
     """Create some sample data."""
 
     # In case this is run more than once, empty out existing data
-    User.query.delete()
     Review.query.delete()
+    User.query.delete()
+    
 
     # Add sample users and reviews
-    r1 = Review(bathroom_name='goodRR', date_time='2021-11-01', cleanliness='3', accessible="True", lgbt_friendly="False", comments="good", bathroom_id="01", user_id="1")
-    r2 = Review(bathroom_name='greatRR', date_time='2021-11-02', cleanliness='5', accessible="True", lgbt_friendly="True", comments="great", bathroom_id="02", user_id="2")
-    r3 = Review(bathroom_name='badRR', date_time='2021-11-03', cleanliness='1', accessible="Fa;se", lgbt_friendly="False", comments="bad", bathroom_id="03", user_id="3")
+    r1 = Review(bathroom_name='goodRR', date_time='2021-11-01', cleanliness='3', accessible=True, lgbt_friendly=False, comments="good", bathroom_id="01", user_id="1")
+    r2 = Review(bathroom_name='greatRR', date_time='2021-11-02', cleanliness='5', accessible=True, lgbt_friendly=True, comments="great", bathroom_id="02", user_id="2")
+    r3 = Review(bathroom_name='badRR', date_time='2021-11-03', cleanliness='1', accessible=False, lgbt_friendly=False, comments="bad", bathroom_id="03", user_id="3")
 
     chani = User(fname='Chani', lname="Kynes", email="chani@arrakis.com", password="sihaya")
     usul = User(fname='Paul', lname="Atreides", email="waymaker@arrakis.com", password="maud'dib")
