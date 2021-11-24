@@ -16,7 +16,7 @@ class FlaskTestsBasic(TestCase):
 
     def test_homepage(self):
         result = self.client.get("/")
-        self.assertIn(b"Create", result.data)
+        self.assertIn(b'<label for="floatingInput">Email address</label>', result.data)
 
 class FlaskTestsDatabase(TestCase):
 
