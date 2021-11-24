@@ -123,10 +123,23 @@ COPY public.review_info (review_id, bathroom_name, date_time, cleanliness, acces
 8	Swift Food Mart	2021-11-01	1	t	f	You do not want to go here...trust me. 	ChIJvUAVAHDCQIYRVsU9xggoL_8	1
 9	Exxon	2021-11-12	3	t	t	Fairly clean for a little gas station.	ChIJ71CMwRHCQIYRJSK2NiFr2Ro	1
 10	McDonald's	2021-11-14	5	t	f	CLEAN!!	ChIJqefELgrCQIYRUdAmyEoYW-I	1
-11	McDonald's	2021-11-14	5	t	f	CLEAN!!	ChIJqefELgrCQIYRUdAmyEoYW-I	1
 12	Chevron	2021-11-02	1	f	f	A lot of people hanging around outside. Wish I could rate this a negative 100. Felt unsafe and restroom was extremely dirty. 	ChIJQeEdnxbCQIYR1t19RlpVIyU	1
 13	Chick-fil-A	2021-11-04	5	t	f	Clean. Too bad they aren't LGBT friendly.	${restroomMarker.bathroom_id}	1
 14	Hartz Chicken Buffet	2021-11-16	3	t	t	Restrooms were not gender neutral, but they were single use and staff was very lgbt friendly.	ChIJZf4U4mXCQIYRV5A24GaB9Fo	1
+15	Manbo food	2021-11-16	1	t	t	Gender neutral restrooms...yayyyyy!	ChIJlZZ8P2XCQIYRVqQxp6Q6-30	1
+18	Taqueria La Sabrosita	2021-11-18	4	t	f	Restrooms only for one person at a time. Their hand soap smelled amazing too. 	ChIJKxPibXfCQIYREAKlEJunlOk	1
+19	Amigo's Gas	2021-11-07	2	f	f		ChIJp5BTY2_CQIYRQaS9mmk1uFg	1
+20	Circle K	2021-11-22	1	t	t	Gender neutral restrooms, but filthy.	ChIJVeryLmzCQIYRgXmUnWnvV-A	1
+21	Phillips 66	2021-11-22	4	t	f	Crazy clean!	ChIJa2nL8RHCQIYR08r1deQV9Ds	1
+22	Phillips 66	2021-11-22	4	t	f	Crazy clean!	ChIJa2nL8RHCQIYR08r1deQV9Ds	1
+23	Swift Food Mart	2021-11-04	1	f	f	Never again.	${restroomMarker.bathroom_id}	1
+24	Manbo food	2021-10-04	5	t	t	Very clean, very friendly, and Trans friendly restrooms.	ChIJlZZ8P2XCQIYRVqQxp6Q6-30	1
+25	Manbo food	2021-10-04	5	t	t	Very clean, very friendly, and Trans friendly restrooms.	ChIJlZZ8P2XCQIYRVqQxp6Q6-30	1
+26	Chick-fil-A	2021-11-23	5	f	f	It's a shame that Chik-fil-a does not support the LGBT community.	${restroomMarker.bathroom_id}	3
+28	El Pupusodromo	2021-11-09	4	t	f	Overall pretty great.	${restroomMarker.bathroom_id}	1
+29	Astral Catering	2021-11-23	1	f	f	Not a public restroom.	ChIJGxIh0WzCQIYRM80c79ZzHrs	1
+30	Chick-fil-A	2021-11-16	5	t	f	Definiely not LGBTQ friendly...	ChIJKTph52DCQIYRBXJ3QbyiBsc	1
+32	Tacos	2021-11-23	5	t	t	LGBTQ friendly, handicap accessible, very clean, and TACOS!!	ChIJtxXDNT_DQIYR-tTSgze6ZIY	4
 \.
 
 
@@ -138,6 +151,7 @@ COPY public.user_info (user_id, fname, lname, email, password) FROM stdin;
 1	Courtney	Doss	777.catalyst@gmail.com	cosmo
 2	Bobby	Hassan	test@gmail.com	bobby
 3	Steve	advisor	steve@gmail.com	test
+4	Bullseye	Target	targetmascot@target.com	target
 \.
 
 
@@ -145,14 +159,14 @@ COPY public.user_info (user_id, fname, lname, email, password) FROM stdin;
 -- Name: review_info_review_id_seq; Type: SEQUENCE SET; Schema: public; Owner: courtneydoss
 --
 
-SELECT pg_catalog.setval('public.review_info_review_id_seq', 14, true);
+SELECT pg_catalog.setval('public.review_info_review_id_seq', 32, true);
 
 
 --
 -- Name: user_info_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: courtneydoss
 --
 
-SELECT pg_catalog.setval('public.user_info_user_id_seq', 3, true);
+SELECT pg_catalog.setval('public.user_info_user_id_seq', 4, true);
 
 
 --
