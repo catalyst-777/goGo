@@ -18,7 +18,11 @@ def homepage():
     """View homepage."""
 
     return render_template('homepage.html')
+@app.route("/display_registration")
+def display_registration():
+    """Show registration form"""
 
+    return render_template("register_user.html") 
 @app.route("/users", methods=["GET","POST"])
 def register_user():
     """Create a new user."""
