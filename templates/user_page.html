@@ -2,6 +2,7 @@
 
 {% block title %}{{ fname }}'s Page{% endblock %}
 {% block head %}
+<script src="/static/js/mapStyles.js"></script>
 <script src="/static/js/map.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxaT5BnADZrbyB9seeggQWfvKp_oCUYpg&libraries=places&callback=initMap"></script>
 {% endblock %}
@@ -10,7 +11,7 @@
     <nav class="navbar static-top navbar-expand-lg navbar-dark bg-dark" >
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="/static/img/goGo_icon_cropped.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+                <img src="/static/img/goGO_New_Logo.pptx.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
                 goGo
               </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +30,8 @@
         </div>
       </nav>
       <h1 class="display-5">Welcome, {{ fname }}!</h1>
-    
+      
+      
       {% if show_predictions_modal %}
       <div id="review_modal" class="modal" tabindex="-1">
         <div class="modal-dialog">

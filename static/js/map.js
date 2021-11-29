@@ -22,7 +22,8 @@ function initMap() {
   //options object stores where map should center and how far in to zoom
   const options = {
     center: userLoc,
-    zoom: 15
+    zoom: 14,
+    styles: MAPSTYLES
   }
 
   // checks if geo location is supported
@@ -126,7 +127,7 @@ function initMap() {
                 <h3>${restroomName}</h3>
                 <div id="average-rating${i}">
                 
-              </div>
+                </div>
                 <p><b>Address: </b>${restroomAddress}</p>
               
               </div>
@@ -142,7 +143,11 @@ function initMap() {
               bathroom_id: place_id,
               name: restroomName,
               restroomLat: restroomLat,
-              restroomLng: restroomLng
+              restroomLng: restroomLng,
+              icon: {
+                url: '/static/img/toilet_blue.png',
+                scaledSize: new google.maps.Size(50, 50),
+              }
             });
             
             // create new instance of info window
@@ -246,7 +251,7 @@ function initMap() {
         position: userLoc,
         title: 'You are Here!',
         icon: {
-          url: '/static/img/goGo_icon_cropped.png',
+          url: '/static/img/goGO_New_Logo.pptx.png',
           scaledSize: new google.maps.Size(50, 50),
         },
         map: map,

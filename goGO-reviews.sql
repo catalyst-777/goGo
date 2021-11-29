@@ -140,6 +140,8 @@ COPY public.review_info (review_id, bathroom_name, date_time, cleanliness, acces
 29	Astral Catering	2021-11-23	1	f	f	Not a public restroom.	ChIJGxIh0WzCQIYRM80c79ZzHrs	1
 30	Chick-fil-A	2021-11-16	5	t	f	Definiely not LGBTQ friendly...	ChIJKTph52DCQIYRBXJ3QbyiBsc	1
 32	Tacos	2021-11-23	5	t	t	LGBTQ friendly, handicap accessible, very clean, and TACOS!!	ChIJtxXDNT_DQIYR-tTSgze6ZIY	4
+33	El Pupusodromo	2021-11-24	5	f	t	bathroom smells like pinesol, so I KNOW it's clean!	ChIJT5Y80m3CQIYRtFqnNy99ZTA	7
+34	Neft Inc	2021-11-22	5	f	f	Very clean restroom, but terrible vibes.	ChIJQ6munxbCQIYRM8vBOwpj-yA	1
 \.
 
 
@@ -152,6 +154,9 @@ COPY public.user_info (user_id, fname, lname, email, password) FROM stdin;
 2	Bobby	Hassan	test@gmail.com	bobby
 3	Steve	advisor	steve@gmail.com	test
 4	Bullseye	Target	targetmascot@target.com	target
+5	Austin	Doss	middlebro@brothers.com	austin
+6	Christian 	Bridgeforth	littlebro@brothers.com	chris
+7	Asher	Alexander	aaa140777@gmail.com	poop101
 \.
 
 
@@ -159,14 +164,14 @@ COPY public.user_info (user_id, fname, lname, email, password) FROM stdin;
 -- Name: review_info_review_id_seq; Type: SEQUENCE SET; Schema: public; Owner: courtneydoss
 --
 
-SELECT pg_catalog.setval('public.review_info_review_id_seq', 32, true);
+SELECT pg_catalog.setval('public.review_info_review_id_seq', 34, true);
 
 
 --
 -- Name: user_info_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: courtneydoss
 --
 
-SELECT pg_catalog.setval('public.user_info_user_id_seq', 4, true);
+SELECT pg_catalog.setval('public.user_info_user_id_seq', 7, true);
 
 
 --
