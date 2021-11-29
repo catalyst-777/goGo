@@ -178,13 +178,13 @@ function initMap() {
                 <h2>${restroomMarker.name}</h2>
                 <input type="hidden" id="bathroomID" name="bathroomID" value="${restroomMarker.bathroom_id}">
                 <input type="hidden" id="bathroomName" name="bathroomName" value="${restroomMarker.name}">
-                <button type="submit" value="Submit "id="leave-review" class="${restroomMarker.bathroom_id}"">Leave Review</button>
+                <button class="w-100 btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" type="submit" value="Submit "id="leave-review" class="${restroomMarker.bathroom_id}"">Leave Review</button>
               </form>
 
               <form action="/all_restroom_reviews" method="POST">
                 <input type="hidden" id="bathroomID" name="bathroomID" value="${restroomMarker.bathroom_id}">
                 <input type="hidden" id="bathroomName" name="bathroomName" value="${restroomMarker.name}">
-                <button type="submit" value="Submit "id="see-restroom-reviews" class="${restroomMarker.bathroom_id}">See Restroom Reviews</button>
+                <button class="w-100 btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"  type="submit" value="Submit "id="see-restroom-reviews" class="${restroomMarker.bathroom_id}">Restroom Reviews</button>
               </form>
     
               

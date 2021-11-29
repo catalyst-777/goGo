@@ -2,6 +2,22 @@
     padding-top: 70px;
 }
 
-button.disabled{
-    display: none;
-    }
+.map-style {
+    width: 1000px;
+    height: 1000px;
+  }
+
+  #login-logo {
+    height: 400px;
+    
+  }
+
+  .btn-primary {
+    background-color: #6600CC !important;
+    border-color: #6600CC !important;
+  }
+  /* .btn-outline-info {
+    background-color: #00b0f0 !important;
+    border-color: #00b0f0 !important;
+    color: white;
+  } */

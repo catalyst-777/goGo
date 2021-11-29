@@ -8,21 +8,19 @@
 {% endblock %}
 
 {% block body %}
-    <nav class="navbar static-top navbar-expand-lg navbar-dark bg-dark" >
+    <nav class="navbar static-top navbar-expand-lg navbar-dark" style="background-color: #6600CC" >
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="/static/img/goGO_New_Logo.pptx.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-                goGo
+                 goGo
               </a>
+              <p></p>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-link active" aria-current="page" href="#">Home</a>
-              <form class="d-flex" action="/all_user_reviews" method="POST">
-                <input class="btn btn-outline-success" type="submit" value="See All Your Reviews" >
-              </form>
               <a class="nav-link" href="/log_out">Log Out</a>
             
             </div>
@@ -98,11 +96,40 @@
       </div>
      
       {% endif %} 
-      <div class="container">
-        <div class="row">
-          <div id="review-menu" class="col">
-          </div>
+        
+		<div class="sidebar-demo d-flex align-items-stretch">
+			<aside class="navbar bg-light align-items-start w-25">
+				<nav class="nav flex-column position-sticky w-100">
+					<form class="d-flex" action="/all_user_reviews" method="POST">
+                        <input class="w-100 btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" type="submit" value="Your Reviews" >
+                      </form>
+                      <div id="review-menu" style="width:100%">
+                    </div>
+					<button class="w-100 btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" disabled="true" style="display:hidden" id="get-directions">Get Directions</button>
+                    <button class="w-100 btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" disabled="true" style="display:hidden" id="reset">Reset</button>
+                    <div id="directionsPanel" style="float:center;width:100%;height:50%"></div>
+				</nav>
+			</aside>
+
+			<main class="main-content w-100">
+				<div class="container pt-2">
+					<div class="row">
+						<div class="col">
+                            
+                            <div id="map" class="map-style" ></div>
+						</div>
+					</div>
+				</div>
+			</main>
+
+		</div>
+        <!-- <div class="row">
           <div class="col">
+            <form class="d-flex" action="/all_user_reviews" method="POST">
+                <input class="btn btn-outline-success" type="submit" value="Your Reviews" >
+              </form>
+            <div id="review-menu">
+            </div>
             <button disabled="true" style="display:hidden" id="get-directions">Get Directions</button>
             <button disabled="true" style="display:hidden" id="reset">Reset</button>
           </div>
@@ -114,11 +141,11 @@
         </div>
         <div class="row">
             <div class="col">
-                <div id="map" style="height: 1000px; width: 1000px;"></div>
+                
             </div>
           </div>
       </div>
-   
+    -->
       {% if show_predictions_modal %}
       <script type="text/javascript">
           $(window).on('load', function() {
