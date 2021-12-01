@@ -5,23 +5,25 @@
 {% endblock %}
 
 {% block body %}
-<nav class="navbar static-top navbar-expand-lg navbar-dark bg-dark" >
+<nav class="navbar static-top navbar-expand-lg navbar-dark" style="background-color: #6600CC" >
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <img src="/static/img/goGo_icon_cropped.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-            goGo
+            <img src="/static/img/gogo_logo_purpleBackground.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+             goGo
           </a>
+          <p></p>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link" aria-current="page" href="user_page">Home</a>
-          <a class="nav-link" href="/log_out">Log Out</a>
-        </div>
+            <a class="nav-link" aria-current="page" href="user_page">Home</a>
+            <a class="nav-link" href="/log_out">Log Out</a>
+          </div>
       </div>
     </div>
   </nav>
+ 
 {% for msg in get_flashed_messages() %}
       <p class="flash-msg">
         {{ msg }}
@@ -40,10 +42,6 @@
                         <li class="list-group-item">Handicap Accessible? {{review["accessible"]}}</li>
                         <li class="list-group-item">Comments: {{review["comments"]}}</li>
                     </ul>
-                    <!-- <form action="/update_review" method="POST">
-                        <input type="hidden" id="review_id" name="review_id" value="{{review['review_id']}}">
-                        <button type="submit" value="Submit "id="update-restroom-review" class="{{review['review_id']}}">Update</button>
-                    </form> -->
                     <div class="card-body">
                         <form action="/delete_review" method="POST">
                             <input type="hidden" id="review_id" name="review_id" value="{{review['review_id']}}">

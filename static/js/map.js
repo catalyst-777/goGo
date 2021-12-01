@@ -251,7 +251,7 @@ function initMap() {
         position: userLoc,
         title: 'You are Here!',
         icon: {
-          url: '/static/img/goGO_New_Logo.pptx.png',
+          url: '/static/img/purpleman.svg',
           scaledSize: new google.maps.Size(50, 50),
         },
         map: map,
