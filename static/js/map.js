@@ -175,7 +175,7 @@ function initMap() {
             
             $('#review-menu').html(`
               <form action="/review_form" method="POST">
-                <h2>${restroomMarker.name}</h2>
+                <h2 style="text-align: center;"><strong>${restroomMarker.name}</strong></h2>
                 <input type="hidden" id="bathroomID" name="bathroomID" value="${restroomMarker.bathroom_id}">
                 <input type="hidden" id="bathroomName" name="bathroomName" value="${restroomMarker.name}">
                 <button class="w-100 btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" type="submit" value="Submit "id="leave-review" class="${restroomMarker.bathroom_id}"">Leave Review</button>

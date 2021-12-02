@@ -1,6 +1,4 @@
 {% extends 'base.html' %}
-
-{% block title %}{{ fname }}'s Page{% endblock %}
 {% block head %}
 <script src="/static/js/mapStyles.js"></script>
 <script src="/static/js/map.js"></script>
@@ -27,7 +25,11 @@
           </div>
         </div>
       </nav>
+      
       <h1 class="display-5">Welcome, {{ fname }}!</h1>
+      <form id="your-reviews" action="/all_user_reviews" method="POST">
+        <input class="w-100 btn btn-primary btn-lg px-4 me-sm-3 fw-bold" type="submit" value="Your Reviews" >
+      </form>
       
       
       {% if show_predictions_modal %}
@@ -97,12 +99,9 @@
      
       {% endif %} 
         
-		<div class="sidebar-demo d-flex align-items-stretch">
+		<div class="sidebar d-flex align-items-stretch">
 			<aside class="navbar bg-light align-items-start w-25">
 				<nav class="nav flex-column position-sticky w-100">
-					<form class="d-flex" action="/all_user_reviews" method="POST">
-                        <input class="w-100 btn btn-primary btn-lg px-4 me-sm-3 fw-bold" type="submit" value="Your Reviews" >
-                      </form>
                       <div id="review-menu" style="width:100%">
                     </div>
 					<button class="w-100 btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" disabled="true" style="display:hidden" id="get-directions">Get Directions</button>
@@ -123,29 +122,7 @@
 			</main>
 
 		</div>
-        <!-- <div class="row">
-          <div class="col">
-            <form class="d-flex" action="/all_user_reviews" method="POST">
-                <input class="btn btn-outline-success" type="submit" value="Your Reviews" >
-              </form>
-            <div id="review-menu">
-            </div>
-            <button disabled="true" style="display:hidden" id="get-directions">Get Directions</button>
-            <button disabled="true" style="display:hidden" id="reset">Reset</button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div id="directionsPanel" style="float:center;width:100%;height:50%"></div>
-          </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                
-            </div>
-          </div>
-      </div>
-    -->
+
       {% if show_predictions_modal %}
       <script type="text/javascript">
           $(window).on('load', function() {

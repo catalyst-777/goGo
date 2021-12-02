@@ -1,6 +1,4 @@
 {% extends 'base.html' %}
-
-{% block title %}{{ fname }}'s Reviews{% endblock %}
 {% block head %}
 {% endblock %}
 
@@ -29,29 +27,32 @@
         {{ msg }}
       </p>
     {% endfor %}
-    <h1>Here are your reviews, {{ fname }}!</h1>
-    <ul class="all_user_reviews">
-        {% for review in reviews %}
-            <div class="card" style="width: 25rem;">
-                <div class="card-body">
-                    <h5 class="card-title">{{review["bathroom_name"]}}</h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Date: {{review["date_time"]}}</li>
-                        <li class="list-group-item">Cleanliness Rating: {{review["cleanliness"]}}/ 5</li>
-                        <li class="list-group-item">LGBTQIA Friendly? {{review["lgbt_friendly"]}}</li>
-                        <li class="list-group-item">Handicap Accessible? {{review["accessible"]}}</li>
-                        <li class="list-group-item">Comments: {{review["comments"]}}</li>
-                    </ul>
+    <h1 class="review-heading" >{{ fname }}'s Reviews</h1>
+    <div class="user-reviews">
+        <ul class="all_user_reviews_list">
+            {% for review in reviews %}
+                <div class="card" style="width: 25rem;">
                     <div class="card-body">
-                        <form action="/delete_review" method="POST">
-                            <input type="hidden" id="review_id" name="review_id" value="{{review['review_id']}}">
-                            <button type="submit" value="Submit "id="delete-restroom-review" class="w-100 btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold {{review['review_id']}}">Delete </button>
-                        </form>
+                        <h5 class="card-title">{{review["bathroom_name"]}}</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Date: {{review["date_time"]}}</li>
+                            <li class="list-group-item">Cleanliness Rating: {{review["cleanliness"]}}/ 5</li>
+                            <li class="list-group-item">LGBTQIA Friendly? {{review["lgbt_friendly"]}}</li>
+                            <li class="list-group-item">Handicap Accessible? {{review["accessible"]}}</li>
+                            <li class="list-group-item">Comments: {{review["comments"]}}</li>
+                        </ul>
+                        <div class="card-body">
+                            <form action="/delete_review" method="POST">
+                                <input type="hidden" id="review_id" name="review_id" value="{{review['review_id']}}">
+                                <button type="submit" value="Submit "id="delete-restroom-review" class="w-100 btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold {{review['review_id']}}">Delete </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <p></p>
-        {% endfor %}
-      </ul>
+                <p></p>
+            {% endfor %}
+          </ul>
+    </div>
+ 
 {% endblock %}
 

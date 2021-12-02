@@ -1,24 +1,76 @@
 .body {
     padding-top: 70px;
+    font-family: 'Ruda', Sans-Serif;
+    Font-Size: 40px;
 }
 
+h1 {
+    font-family: 'Ruda', Sans-Serif;
+    Font-Size: 40px;
+}
+h2, h3, h4, h5, h6 {
+    font-family: 'Roboto Slab', Serif;
+    Font-Size: 20px;
+  }
+/* #L {
+    color: #D12229
+} */
 .map-style {
-    width: 1000px;
+    width: 1300px;
     height: 1000px;
+    border-style: solid;
+    border-radius: 25px;
+    border-width: thick;
     border-color: #6600CC;
   }
 
-  #login-logo {
+#login-logo {
     height: 400px;
     
   }
+/* Welcome User */
+  .display-5{
+    display: inline;
+    margin-top: 20px;
+  }
+ /* see your reviews button */
+  #your-reviews{
+      display: inline;
+      float: right;
+      padding-top: 10px;
+      margin-right: 15px;
+  }
 
+  .review-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* all reviews listed on cards */
+  .user-reviews {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eeedf1;
+  }
+  /* chosen restroom reviews */
+  .chosen-reviews {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eeedf1;
+  }
+  .sidebar {
+      height: 1000px;
+      width: 100%
+  }
+ 
   .btn-primary {
     background-color: #6600CC !important;
     border-color: #6600CC !important;
+    font-family: 'Roboto Slab', Serif;
   }
-  /* .btn-outline-info {
-    background-color: #00b0f0 !important;
-    border-color: #00b0f0 !important;
-    color: white;
-  } */
+  .btn-outline-info {
+    font-family: 'Roboto Slab', Serif;
+  }

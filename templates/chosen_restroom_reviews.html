@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 
-{% block title %}Reviews{% endblock %}
 {% block head %}
 {% endblock %}
 
@@ -28,11 +27,10 @@
         {{ msg }}
       </p>
     {% endfor %}
-      <div class="container-fluid">
-        <div class="row">
-            <h1>Here are the reviews for {{bathroom_name}}!</h1>
-            <ul class="all_user_reviews">
-                {% for review in reviews %}
+        <h1 class="review-heading">Reviews for {{bathroom_name}}!</h1>
+            <div class="chosen-reviews">
+                <ul class="all_user_reviews">
+                    {% for review in reviews %}
                     <div class="card" style="width: 25rem;">
                         <div class="card-body">
                             <h5 class="card-title">Date: {{review["date_time"]}}</h5>
@@ -42,22 +40,19 @@
                                     <li class="list-group-item">Handicap Accessible? {{review["accessible"]}}</li>
                                     <li class="list-group-item">Comments: {{review["comments"]}}</li>
                                 </ul>
-                        </div>
-                    </div>
                     <p></p>
+                </div>
                 {% endfor %}
             </ul>
         </div>
-        <div class="row">
+        <div class="chosen-reviews">
             <form action="/review_form" method="POST">
                 <input type="hidden" id="bathroomID" name="bathroomID" value="${restroomMarker.bathroom_id}">
                 <input type="hidden" id="bathroomName" name="bathroomName" value="{{bathroom_name}}">
-                <button type="submit" value="Submit "id="leave-review" class="{{bathroom_id}}">Leave Review</button>
+                <button type="submit" value="Submit "id="leave-review" class="{{bathroom_id}} w-100 btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">Leave Review</button>
             </form>
             <p></p>
         </div>
     </div>
+
 {% endblock %}
-
-
-
