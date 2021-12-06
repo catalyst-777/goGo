@@ -1,4 +1,4 @@
-![Logo](/static/img/gogo_logo_purpleBackground.png)
+![Logo](/static/img/logo_README.png)
 goGo
 
 Anyone who has traveled or been in an unfamiliar area knows the feeling; you're out and about and suddenly you gotta goGO, you know? We want to know where we can goGo and how to get there, but we have other questions too. Will the restroom be clean, safe, LGBTQ+ friendly, and handicap accessible? goGO answers all those questions through a clean and easy-to-navigate interface. goGo users can: find their location,  find restrooms within a 2-mile radius, get the route to the restroom of their choice, leave reviews based on cleanliness, lgbtq+ friendliness, and handicap-accessibility, view their previous reviews and delete them if desired, and see reviews of the restroom of their choice.
