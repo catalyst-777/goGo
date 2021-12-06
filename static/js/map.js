@@ -242,6 +242,7 @@ function initMap() {
         }
         
       })
+      
     
       // create new instance of Map object
       map = new google.maps.Map(document.getElementById("map"), options);
@@ -285,6 +286,7 @@ function initMap() {
     console.log('geolocation not supported');
     map = new google.maps.Map(document.getElementById("map"), options);
 }
+
 
     // handles reset, essentially refreshes page after running directions
     $('#reset').on('click', evt =>{

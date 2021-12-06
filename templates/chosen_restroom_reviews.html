@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block head %}
 {% endblock %}
 
@@ -22,37 +21,32 @@
       </div>
     </div>
   </nav>
+ 
 {% for msg in get_flashed_messages() %}
       <p class="flash-msg">
         {{ msg }}
       </p>
     {% endfor %}
-        <h1 class="review-heading">Reviews for {{bathroom_name}}!</h1>
-            <div class="chosen-reviews">
-                <ul class="all_user_reviews">
-                    {% for review in reviews %}
-                    <div class="card" style="width: 25rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Date: {{review["date_time"]}}</h5>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">cleanliness rating: {{review["cleanliness"]}}/ 5</li>
-                                    <li class="list-group-item">LGBTQIA Friendly? {{review["lgbt_friendly"]}}</li>
-                                    <li class="list-group-item">Handicap Accessible? {{review["accessible"]}}</li>
-                                    <li class="list-group-item">Comments: {{review["comments"]}}</li>
-                                </ul>
-                    <p></p>
+    <h1 class="review-heading" >{{bathroom_name}} Reviews</h1>
+    <div class="user-reviews">
+        <ul class="all_user_reviews_list">
+            {% for review in reviews %}
+                <div class="card" style="width: 25rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{review["bathroom_name"]}}</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Date: {{review["date_time"]}}</li>
+                            <li class="list-group-item">Cleanliness Rating: {{review["cleanliness"]}}/ 5</li>
+                            <li class="list-group-item">LGBTQIA Friendly? {{review["lgbt_friendly"]}}</li>
+                            <li class="list-group-item">Handicap Accessible? {{review["accessible"]}}</li>
+                            <li class="list-group-item">Comments: {{review["comments"]}}</li>
+                        </ul>
+                    </div>
                 </div>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="chosen-reviews">
-            <form action="/review_form" method="POST">
-                <input type="hidden" id="bathroomID" name="bathroomID" value="${restroomMarker.bathroom_id}">
-                <input type="hidden" id="bathroomName" name="bathroomName" value="{{bathroom_name}}">
-                <button type="submit" value="Submit "id="leave-review" class="{{bathroom_id}} w-100 btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">Leave Review</button>
-            </form>
-            <p></p>
-        </div>
+                <p></p>
+            {% endfor %}
+          </ul>
     </div>
-
+ 
 {% endblock %}
+

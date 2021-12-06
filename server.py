@@ -79,14 +79,19 @@ def log_out():
 #show restrooms on map
 @app.route("/restrooms", methods=['GET'])
 def get_restrooms():
+
     """Get closest restrooms to user location from google maps api"""
     url1 = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
+    # GET user lat/lng
     userLat = request.args.get('lat')
     userLng = request.args.get('lng')
 
+    # SET keyword list
     keywords = ['food', 'gas', 'restroom']
+    
     data_list = []
+    # iterate over keyword list and create/send payload
     for keyword in keywords:
         payload={
             'location': f'{userLat},{userLng}',
@@ -95,21 +100,24 @@ def get_restrooms():
             'key': f'{api_key}'
         }
 
+        # Get response from api call
         response = requests.get(url1, params=payload)
         resp_data = response.json()
-        # print(keyword + ":\n" + str(len(resp_data["results"])))
+        
+        # ADD response to data list
         data_list.append(resp_data)
-        # print(len(data_list))
-  
+    
     results_list = []
+    # iterate over datalist, grab value from results key, append to results list
     for data in data_list:
         for result in data["results"]:
             results_list.append(result)
     
+    # recreate response structure
     aggregated_data = data_list[0]
-    # print(data_list)
+    # inject results list into results key/value
     aggregated_data["results"] = results_list
-    # print(len(aggregated_data["results"]))
+
 
     # get all place ids to use in api call to get phone numbers and hours of operation
     # place_ids = []
