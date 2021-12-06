@@ -1,4 +1,4 @@
-# <img src="/static/img/gogo_logo_purpleBackround.png">
+![Logo](/static/img/gogo_logo_purpleBackground.png)
 goGo
 
 Anyone who has traveled or been in an unfamiliar area knows the feeling; you're out and about and suddenly you gotta goGO, you know? We want to know where we can goGo and how to get there, but we have other questions too. Will the restroom be clean, safe, LGBTQ+ friendly, and handicap accessible? goGO answers all those questions through a clean and easy-to-navigate interface. goGo users can: find their location,  find restrooms within a 2-mile radius, get the route to the restroom of their choice, leave reviews based on cleanliness, lgbtq+ friendliness, and handicap-accessibility, view their previous reviews and delete them if desired, and see reviews of the restroom of their choice.
@@ -19,21 +19,24 @@ __APIs:__ Google Maps Platform: maps, routes, places <br/>
 
 ## <a name="features"></a>Features
 
-  
+Login to get goGo-ing! 
 ![Login](/static/img/login.gif)
 <br/><br/><br/>
-Login to get goGo-ing!
-  
+
+
+Get directions to restroom of your choice.
 ![Get Directions](/static/img/getDirections_gif.gif)
 <br/><br/><br/>
-Get directions to restroom of your choice.
-  
+
+
+Add your review to aid other goGO-ers in their search for the perfect restroom. 
 ![Add Review](/static/img/leaveReview_gif.gif)
 <br/><br/><br/>
-Add your review to aid other goGO-ers in their search for the perfect restroom. 
-  
+ 
+
+ View reviews of restroom of your choice.
 ![Restroom Reviews](/static/img/restroomReviews_gif.gif)
-View reviews of restroom of your choice.
+
 
 ## <a name="installation"></a>Setup/Installation ⌨️
 
