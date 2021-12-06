@@ -9,7 +9,6 @@ Anyone who has traveled or been in an unfamiliar area knows the feeling; you're 
 * [Features](#features)
 * [Setup/Installation](#installation)
 * [To-Do](#future)
-* [License](#license)
 
 ## <a name="tech-stack"></a>Tech Stack
 
